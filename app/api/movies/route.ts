@@ -1,4 +1,6 @@
-export async function GET() {
+import { NextRequest } from "next/server";
+
+export async function GET(request: NextRequest) {
   const apiKey = process.env.TMDB_API_KEY;
 
   if (!apiKey) {
@@ -7,7 +9,17 @@ export async function GET() {
     });
   }
 
-  const tmdbUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=1`;
+  const { searchParams } = new URL(request.url);
+  const category = searchParams.get("category") || "popular";
+
+  const validCategories = ["popular", "top_rated", "now_playing", "upcoming"];
+  if (!validCategories.includes(category)) {
+    return new Response(JSON.stringify({ error: "invalid category" }), {
+      status: 400,
+    });
+  }
+
+  const tmdbUrl = `https://api.themoviedb.org/3/movie/${category}?api_key=${apiKey}&language=en-US&page=1`;
 
   const res = await fetch(tmdbUrl);
   if (!res.ok) {

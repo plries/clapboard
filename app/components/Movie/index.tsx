@@ -18,7 +18,7 @@ export const Movie = ({ movie, index, genres }: MoviePropTypes) => {
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, delay: index * 0.1, ease: "easeInOut" }}
       className="font-dm-sans z-10 flex h-fit w-full flex-col gap-2 rounded-2xl border border-neutral-300 bg-gradient-to-b from-neutral-50 to-neutral-400 p-1 font-medium lowercase shadow-xl"

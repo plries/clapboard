@@ -27,7 +27,7 @@ export const MovieList = () => {
             <Movie
               key={movie.id}
               movie={movie}
-              index={index}
+              index={index + 1}
               genres={hook.genres}
               {...movie}
             />
@@ -40,7 +40,7 @@ export const MovieList = () => {
             <Movie
               key={movie.id}
               movie={movie}
-              index={index}
+              index={index + 2}
               genres={hook.genres}
               {...movie}
             />
