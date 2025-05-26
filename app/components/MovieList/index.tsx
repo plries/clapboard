@@ -1,33 +1,51 @@
 "use client";
-import { useEffect, useState } from "react";
-import { MovieTypes } from "../../types";
-import { Movie } from "../Movie";
+import { Movie } from "@/app/components/";
+import { useMovieList } from "./useMovieList";
 
 export const MovieList = () => {
-  const [movies, setMovies] = useState<MovieTypes[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const hook = useMovieList();
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const res = await fetch("/api/movies");
-        const data = await res.json();
-        setMovies(data.results);
-      } catch (err) {
-        setError("failed to load movies");
-      }
-    };
-
-    fetchMovies();
-  }, []);
-
-  if (error) return <div>{error}</div>;
+  if (hook.error) return <p>{hook.error}</p>;
 
   return (
-    <div className="flex h-fit flex-row items-center gap-2">
-      {movies.map((movie, index) => (
-        <Movie key={movie.id} movie={movie} index={index} {...movie} />
-      ))}
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="flex flex-col gap-4">
+        {hook.movies.slice(0, hook.movies.length / 3).map((movie, index) => (
+          <Movie
+            key={movie.id}
+            movie={movie}
+            index={index}
+            genres={hook.genres}
+            {...movie}
+          />
+        ))}
+      </div>
+      <div className="flex flex-col gap-4">
+        {hook.movies
+          .slice(hook.movies.length / 3, (hook.movies.length / 3) * 2)
+          .map((movie, index) => (
+            <Movie
+              key={movie.id}
+              movie={movie}
+              index={index}
+              genres={hook.genres}
+              {...movie}
+            />
+          ))}
+      </div>
+      <div className="flex flex-col gap-4">
+        {hook.movies
+          .slice((hook.movies.length / 3) * 2, hook.movies.length)
+          .map((movie, index) => (
+            <Movie
+              key={movie.id}
+              movie={movie}
+              index={index}
+              genres={hook.genres}
+              {...movie}
+            />
+          ))}
+      </div>
     </div>
   );
 };
