@@ -59,7 +59,7 @@ export const Movie = ({ movie, index, genres }: MoviePropTypes) => {
               className="text-neutral-950 transition-transform duration-300 ease-in-out group-hover:rotate-45"
             />
           }
-          additionialClasses="absolute bottom-2 right-2 z-20 peer"
+          additionalClasses="absolute bottom-2 right-2 z-20 peer"
         />
         <div className="mask-gradient absolute bottom-0 z-10 h-1/2 w-full backdrop-blur-sm transition-all duration-300 peer-hover:backdrop-blur-none" />
         <Image

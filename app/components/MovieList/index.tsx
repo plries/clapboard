@@ -1,11 +1,23 @@
 "use client";
 import { Movie } from "@/app/components/";
 import { useMovieList } from "./useMovieList";
+import { CircleNotchIcon } from "@phosphor-icons/react";
 
 export const MovieList = () => {
   const hook = useMovieList();
 
   if (hook.error) return <p>{hook.error}</p>;
+
+  if (hook.isLoading)
+    return (
+      <div className="grid h-full w-full place-items-center md:h-128">
+        <CircleNotchIcon
+          size={64}
+          weight="light"
+          className="animate-spin text-neutral-50/10"
+        />
+      </div>
+    );
 
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">

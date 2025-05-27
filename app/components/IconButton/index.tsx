@@ -4,11 +4,11 @@ export const IconButton = ({
   icon,
   name,
   onClick,
-  additionialClasses,
+  additionalClasses,
 }: IconButtonPropTypes) => {
   return (
     <button
-      className={`group flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-neutral-100 bg-neutral-200 p-2 shadow-md ${additionialClasses ?? ""}`}
+      className={`group grid h-10 w-10 cursor-pointer place-items-center rounded-full border border-neutral-950/25 bg-neutral-200 p-2 shadow-md ${additionalClasses ?? ""}`}
       name={name}
       onClick={onClick}
     >
