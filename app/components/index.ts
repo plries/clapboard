@@ -3,5 +3,5 @@ export * from "./ClientOnly";
 export * from "./FilterButtons";
 export * from "./PageHeading";
 export * from "./IconButton";
-export * from "./MovieList";
 export * from "./Movie";
+export * from "./MovieList";

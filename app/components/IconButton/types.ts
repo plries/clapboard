@@ -3,4 +3,5 @@ export type IconButtonPropTypes = {
   name: string
   onClick?: () => void
   additionalClasses?: string
+  disabled?: boolean
 };

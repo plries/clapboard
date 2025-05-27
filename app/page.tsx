@@ -10,7 +10,7 @@ export default async function Home() {
     <div className="grid place-items-center p-4">
       <ClientOnly>
         <div className="grid max-w-[1440px] place-items-center">
-          <div className="grid grid-cols-1 gap-8 p-16">
+          <div className="grid grid-cols-1 gap-8 py-16">
             <PageHeading />
             <FilterButtons />
           </div>
