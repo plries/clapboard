@@ -25,6 +25,10 @@
   background: var(--color-neutral-800);
 }
 
+* {
+  scroll-behavior: smooth;
+}
+
 p,
 a,
 li,

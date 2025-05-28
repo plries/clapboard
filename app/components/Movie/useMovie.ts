@@ -10,9 +10,7 @@ export const useMovie = () => {
 
   const toggleModal = () => {
     document.body.style.overflow = isOpen ? "auto" : "hidden";
-    const moviePosition = movieRef.current?.getBoundingClientRect().top;
-
-    console.log(moviePosition);
+    movieRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
     setIsOpen(!isOpen);
   };
 

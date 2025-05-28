@@ -6,6 +6,7 @@ import {
   BookmarkSimpleIcon,
   HeartIcon,
   ArticleIcon,
+  XIcon,
 } from "@phosphor-icons/react";
 import { IconButton } from "@/app/components/";
 import { MoviePropTypes } from "./types";
@@ -45,7 +46,7 @@ export const Movie = ({ movie, index, genres }: MoviePropTypes) => {
           delay: index ? index * 0.1 : 0,
           ease: "easeInOut",
         }}
-        className={`font-dm-sans relative flex h-fit w-full flex-col gap-2 rounded-2xl border border-neutral-300 bg-gradient-to-b from-neutral-50 to-neutral-400 p-1 shadow-xl ${hook.isOpen ? "z-50" : "z-10"}`}
+        className={`font-dm-sans group relative flex h-fit w-full flex-col gap-2 rounded-2xl border border-neutral-300 bg-gradient-to-b from-neutral-50 to-neutral-400 p-1 shadow-xl ${hook.isOpen ? "z-50" : "z-10"}`}
         key={movie.id}
       >
         <div className="z-10 grid auto-rows-min grid-cols-[3fr_1fr] gap-4 p-1">
@@ -73,35 +74,45 @@ export const Movie = ({ movie, index, genres }: MoviePropTypes) => {
           </div>
         </div>
         <div className="relative rounded-2xl border border-neutral-950/10">
-          <div className="peer absolute right-2 bottom-2 z-20 flex flex-row gap-2">
+          <div
+            className={`absolute right-2 bottom-2 z-20 flex flex-row gap-1 transition-opacity duration-300 ease-in-out md:group-hover:opacity-100 ${hook.isOpen ? "md:opacity-100" : "md:opacity-0"}`}
+          >
             <IconButton
               name={`add ${movie.title} to favourites`}
               icon={
-                <HeartIcon className="text-neutral-950 transition-transform duration-300 ease-in-out group-hover:-rotate-15" />
+                <HeartIcon className="text-neutral-950 transition-transform duration-300 ease-in-out hover:-rotate-15" />
               }
+              additionalClasses={`md:group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-20 ${hook.isOpen ? "md:translate-x-0" : "md:translate-x-full "}`}
             />
             <IconButton
               name={`add ${movie.title} to watchlist`}
               icon={
-                <BookmarkSimpleIcon className="text-neutral-950 transition-transform duration-300 ease-in-out group-hover:-translate-y-0.5" />
+                <BookmarkSimpleIcon className="text-neutral-950 transition-transform duration-300 ease-in-out hover:-translate-y-0.5" />
               }
+              additionalClasses={`z-10 md:group-hover:translate-x-0 transition-transform duration-300 ease-in-out ${hook.isOpen ? "md:translate-x-0" : "md:translate-x-1/2"}`}
             />
             <IconButton
               name={`view ${movie.title} details`}
               icon={
-                <ArticleIcon className="text-neutral-950 transition-transform duration-300 ease-in-out group-hover:rotate-15 group-disabled:group-hover:!rotate-0" />
+                <span className="transition-transform duration-300 ease-in-out hover:rotate-10 group-disabled:hover:!rotate-0">
+                  {hook.isOpen ? (
+                    <XIcon className="text-neutral-950" />
+                  ) : (
+                    <ArticleIcon className="text-neutral-950" />
+                  )}
+                </span>
               }
               onClick={hook.toggleModal}
               disabled={!movie.overview}
             />
           </div>
           <div
-            className={`mask-gradient absolute bottom-0 h-1/2 w-full rounded-b-2xl backdrop-blur-sm transition-all duration-300 peer-hover:backdrop-blur-none ${hook.isOpen ? "!backdrop-blur-none" : ""}`}
+            className={`mask-gradient absolute bottom-0 z-10 h-1/2 w-full rounded-b-2xl backdrop-blur-lg transition-all duration-300 group-hover:backdrop-blur-none ${hook.isOpen ? "!backdrop-blur-none" : ""}`}
           />
           <div className="overflow-hidden rounded-2xl">
             <Image
               loading="lazy"
-              className={`transition-scale aspect-video duration-300 peer-hover:scale-105 ${hook.isOpen ? "scale-105" : ""}`}
+              className={`transition-scale aspect-video duration-300 group-hover:scale-105 ${hook.isOpen ? "scale-105" : ""}`}
               src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
               alt={movie.title}
               width={500}
