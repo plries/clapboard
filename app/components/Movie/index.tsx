@@ -7,12 +7,13 @@ import {
   HeartIcon,
   ArticleIcon,
   XIcon,
+  CameraIcon,
 } from "@phosphor-icons/react";
 import { IconButton } from "@/app/components/";
 import { MoviePropTypes } from "./types";
 import { useMovie } from "./useMovie";
 
-export const Movie = ({ movie, index, genres }: MoviePropTypes) => {
+export const Movie = ({ movie, genres }: MoviePropTypes) => {
   const hook = useMovie();
 
   const matchingMovieGenres = genres.map((genre) => {
@@ -40,17 +41,18 @@ export const Movie = ({ movie, index, genres }: MoviePropTypes) => {
       <motion.div
         ref={hook.movieRef}
         initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
+        whileInView={{ opacity: 1, y: 0 }}
         transition={{
           duration: 0.7,
-          delay: index ? index * 0.1 : 0,
           ease: "easeInOut",
         }}
-        className={`font-dm-sans group relative flex h-fit w-full flex-col gap-2 rounded-2xl border border-neutral-300 bg-gradient-to-b from-neutral-50 to-neutral-400 p-1 shadow-xl ${hook.isOpen ? "z-50" : "z-10"}`}
+        className={`font-dm-sans group relative flex h-fit h-full w-full flex-col justify-between gap-2 rounded-2xl border border-neutral-300 bg-gradient-to-b from-neutral-50 to-neutral-400 p-1 shadow-xl ${hook.isOpen ? "z-50" : "z-10"}`}
         key={movie.id}
       >
         <div className="z-10 grid auto-rows-min grid-cols-[3fr_1fr] gap-4 p-1">
-          <p className="pr-4 !text-lg leading-none font-semibold text-neutral-950 md:!text-xl lg:!text-2xl">
+          <p
+            className={`pr-4 !text-lg leading-none font-semibold text-neutral-950 md:!text-xl lg:!text-2xl ${hook.isOpen ? "" : "line-clamp-2"}`}
+          >
             {movie.title}
           </p>
           <p className="font-space-mono leading-none text-neutral-600">
@@ -110,14 +112,24 @@ export const Movie = ({ movie, index, genres }: MoviePropTypes) => {
             className={`mask-gradient absolute bottom-0 z-10 h-1/2 w-full rounded-b-2xl backdrop-blur-lg transition-all duration-300 group-hover:backdrop-blur-none ${hook.isOpen ? "!backdrop-blur-none" : ""}`}
           />
           <div className="overflow-hidden rounded-2xl">
-            <Image
-              loading="lazy"
-              className={`transition-scale aspect-video duration-300 group-hover:scale-105 ${hook.isOpen ? "scale-105" : ""}`}
-              src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
-              alt={movie.title}
-              width={500}
-              height={281}
-            />
+            {movie.backdrop_path ? (
+              <Image
+                loading="lazy"
+                className={`transition-scale aspect-video duration-300 group-hover:scale-105 ${hook.isOpen ? "scale-105" : ""}`}
+                src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
+                alt={movie.title}
+                width={500}
+                height={281}
+              />
+            ) : (
+              <div className="grid aspect-video h-full w-full place-items-center bg-neutral-300/50 inset-shadow-sm">
+                <CameraIcon
+                  size={64}
+                  weight="light"
+                  className="text-neutral-950/25"
+                />
+              </div>
+            )}
           </div>
         </div>
         <div

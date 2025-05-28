@@ -11,6 +11,7 @@ export async function GET(request: NextRequest) {
 
   const { searchParams } = new URL(request.url);
   const category = searchParams.get("category") || "popular";
+  const pageRef = searchParams.get("page") || "1";
 
   const validCategories = ["popular", "top_rated", "now_playing", "upcoming"];
   if (!validCategories.includes(category)) {
@@ -19,7 +20,7 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const tmdbUrl = `https://api.themoviedb.org/3/movie/${category}?api_key=${apiKey}&language=en-US&page=1`;
+  const tmdbUrl = `https://api.themoviedb.org/3/movie/${category}?api_key=${apiKey}&language=en-US&page=${pageRef}`;
 
   const res = await fetch(tmdbUrl);
   if (!res.ok) {
