@@ -4,5 +4,4 @@ export type MoviePropTypes = {
   movie: MovieTypes;
   index?: number;
   genres: GenreTypes[];
-  position?: "top" | "bottom";
 }

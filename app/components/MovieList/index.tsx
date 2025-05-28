@@ -36,7 +36,6 @@ export const MovieList = () => {
             index={index}
             genres={hook.genres}
             {...movie}
-            position={index < col1.length / 2 ? "bottom" : "top"}
           />
         ))}
       </div>
@@ -48,7 +47,6 @@ export const MovieList = () => {
             index={index + 1}
             genres={hook.genres}
             {...movie}
-            position={index < col2.length / 2 ? "bottom" : "top"}
           />
         ))}
       </div>
@@ -60,7 +58,6 @@ export const MovieList = () => {
             index={index + 2}
             genres={hook.genres}
             {...movie}
-            position={index < col3.length / 2 ? "bottom" : "top"}
           />
         ))}
       </div>

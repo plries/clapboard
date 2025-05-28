@@ -11,7 +11,7 @@ import { IconButton } from "@/app/components/";
 import { MoviePropTypes } from "./types";
 import { useMovie } from "./useMovie";
 
-export const Movie = ({ movie, index, genres, position }: MoviePropTypes) => {
+export const Movie = ({ movie, index, genres }: MoviePropTypes) => {
   const hook = useMovie();
 
   const matchingMovieGenres = genres.map((genre) => {
@@ -37,6 +37,7 @@ export const Movie = ({ movie, index, genres, position }: MoviePropTypes) => {
         />
       )}
       <motion.div
+        ref={hook.movieRef}
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{
@@ -109,7 +110,8 @@ export const Movie = ({ movie, index, genres, position }: MoviePropTypes) => {
           </div>
         </div>
         <div
-          className={`absolute left-0 h-full w-full transition-[opacity,margin] duration-300 ease-in-out ${position === "bottom" ? "top-0 origin-top translate-y-full" : "bottom-0 grid origin-bottom -translate-y-full place-items-end"} ${hook.isOpen ? "my-4" : "pointer-events-none opacity-0"}`}
+          ref={hook.dropdownRef}
+          className={`absolute left-0 h-full w-full transition-[opacity,margin] duration-300 ease-in-out ${hook.position === "bottom" ? "top-0 origin-top translate-y-full" : "bottom-0 grid origin-bottom -translate-y-full place-items-end"} ${hook.isOpen ? "my-4" : "pointer-events-none opacity-0"}`}
         >
           <div className="w-full overflow-hidden rounded-2xl border border-neutral-300 bg-gradient-to-b from-neutral-50 to-neutral-400 p-1 shadow-xl">
             <p className="rounded-xl border border-neutral-500/25 p-2 !text-sm leading-normal text-neutral-600 md:!text-base">
