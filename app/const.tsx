@@ -14,4 +14,7 @@ export const PAGE_CONST = {
     { label: "top rated", value: "top_rated", icon: <ShootingStarIcon /> },
     { label: "upcoming", value: "upcoming", icon: <CalendarDotsIcon /> },
   ],
+  DROPDOWNS: {
+    GENRES: "genres",
+  },
 };

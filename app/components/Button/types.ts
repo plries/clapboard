@@ -3,4 +3,5 @@ export type ButtonPropTypes = {
   icon?: React.ReactNode
   onClick?: () => void
   additionalClasses?: string
+  iconRight?: boolean
 };

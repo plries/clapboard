@@ -104,6 +104,7 @@ export const useMovieList = () => {
 
   return {
     movies,
+    setMovies,
     error,
     genres,
     isLoading,
@@ -111,5 +112,6 @@ export const useMovieList = () => {
     bottomRef,
     movieListRef,
     loadingRef,
+    fetchMovies,
   };
 };
