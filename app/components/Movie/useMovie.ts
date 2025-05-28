@@ -8,10 +8,29 @@ export const useMovie = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState(<Readonly<"top" | "bottom">>"top");
 
+  const calculatePosition = () => {
+    const movieRect = movieRef.current?.getBoundingClientRect();
+    const dropdownHeight = dropdownRef.current?.getBoundingClientRect().height;
+
+    if (!movieRect || !dropdownHeight) return;
+
+    if (movieRect.top < movieRect.height || movieRect.top < dropdownHeight) {
+      setPosition("bottom");
+    } else {
+      setPosition("top");
+    }
+  };
+
   const toggleModal = () => {
-    document.body.style.overflow = isOpen ? "auto" : "hidden";
-    movieRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-    setIsOpen(!isOpen);
+    calculatePosition()
+    const nextState = !isOpen;
+    document.body.style.overflow = nextState ? "hidden" : "auto";
+
+    if (nextState) {
+      movieRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    setIsOpen(nextState);
   };
 
   useEffect(() => {
@@ -24,32 +43,11 @@ export const useMovie = () => {
 
     if (isOpen) {
       document.addEventListener("keydown", handleEscape);
-    } else {
-      document.removeEventListener("keydown", handleEscape);
     }
-  });
-
-  useEffect(() => {
-    const handlePosition = () => {
-      const moviePosition = movieRef.current?.getBoundingClientRect().top;
-      const movieHeight = movieRef.current?.getBoundingClientRect().height;
-      const dropdownHeight =
-        dropdownRef.current?.getBoundingClientRect().height;
-
-      if (!moviePosition || !movieHeight || !dropdownHeight) return;
-
-      if (moviePosition < movieHeight || moviePosition < dropdownHeight) {
-        setPosition("bottom");
-      } else {
-        setPosition("top");
-      }
-    };
-
-    window.addEventListener("scroll", handlePosition);
     return () => {
-      window.removeEventListener("scroll", handlePosition);
+      document.removeEventListener("keydown", handleEscape);
     };
-  });
+  }, [isOpen]);
 
   return {
     isOpen,
