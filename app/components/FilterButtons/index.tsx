@@ -4,10 +4,14 @@ import { Button } from "../Button";
 import { useFilterButtons } from "./useFilterButtons";
 import { useMovieList } from "../MovieList/useMovieList";
 import { Dropdown } from "../Dropdown";
+import { useDropdown } from "../Dropdown/useDropdown";
 
 export const FilterButtons = () => {
   const hook = useFilterButtons();
-  const movieListHook = useMovieList();
+  const useDropdownHook = useDropdown();
+  const movieListHook = useMovieList({
+    genreId: useDropdownHook.selectedOption.id,
+  });
 
   return (
     <div className="grid grid-cols-1 gap-2">
@@ -31,6 +35,10 @@ export const FilterButtons = () => {
       <Dropdown
         options={movieListHook.genres}
         label={PAGE_CONST.DROPDOWNS.GENRES}
+        toggleDropdown={useDropdownHook.toggleDropdown}
+        isOpen={useDropdownHook.isOpen}
+        updateSelectedOption={useDropdownHook.updateSelectedOption}
+        selectedOption={useDropdownHook.selectedOption}
       />
     </div>
   );

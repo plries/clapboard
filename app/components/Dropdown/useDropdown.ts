@@ -1,36 +1,32 @@
 import { useState } from "react";
-import { useMovieList } from "../MovieList/useMovieList";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export const useDropdown = () => {
-  const hook = useMovieList();
-
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState({
-    id: 0,
+    id: Number(searchParams.get("with_genres") || 0),
     name: "",
   });
-
+    
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
-
-  const handleOptionClick = (option: { id: number; name: string }) => {
+  
+  const updateSelectedOption = (option: { id: number; name: string }) => {
     setSelectedOption(option);
-
-    const filteredMovies = hook.movies.filter((movie) =>
-      movie.genre_ids.includes(option.id),
-    );
-
-    console.log(filteredMovies);
-    hook.setMovies(filteredMovies);
-
     setIsOpen(false);
+    const params = new URLSearchParams(searchParams);
+    params.set("with_genres", option.id.toString());
+    router.push(`?${params.toString()}`);
   };
 
   return {
     isOpen,
     selectedOption,
     toggleDropdown,
-    handleOptionClick,
+    updateSelectedOption,
   };
 };

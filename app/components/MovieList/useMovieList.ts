@@ -3,7 +3,9 @@ import { useEffect, useState, useRef } from "react";
 import { MovieTypes, GenreTypes } from "@/app/types";
 import { useSearchParams } from "next/navigation";
 
-export const useMovieList = () => {
+export const useMovieList = ({
+  genreId,
+}: { genreId?: number}) => {
   const searchParams = useSearchParams();
   const category = searchParams.get("category") || "popular";
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -27,6 +29,7 @@ export const useMovieList = () => {
       const data = await res.json();
 
       if (isNewCategory) {
+        genreId = undefined;
         setMovies(data.results);
         movieListRef.current?.classList.remove("hidden");
         loadingRef.current?.classList.add("hidden");
@@ -46,6 +49,31 @@ export const useMovieList = () => {
     }
   };
 
+  const fetchFilteredMovies = async (isNewGenre = false) => {
+    try {
+      const res = await fetch(
+        `/api/movies?with_genres=${genreId}&page=${pageRef.current}`,
+      );
+      const data = await res.json();
+
+      if (isNewGenre) {
+        setMovies(data.results);
+        movieListRef.current?.classList.remove("hidden");
+        loadingRef.current?.classList.add("hidden");
+      } else {
+        setMovies((prev) => {
+          const existingIds = new Set(prev.map((m) => m.id));
+          const newMovies = data.results.filter(
+            (m: MovieTypes) => !existingIds.has(m.id),
+          );
+          return [...prev, ...newMovies];
+        });
+      }
+    } catch (err) {
+      setError("failed to load movies");
+    }
+  }
+
   useEffect(() => {
     if (hasFetchedGenresRef.current) return;
     hasFetchedGenresRef.current = true;
@@ -64,21 +92,37 @@ export const useMovieList = () => {
   }, []);
 
   useEffect(() => {
-    if (hasFetchedMoviesRef.current) return;
+    if (hasFetchedMoviesRef.current || genreId !== undefined) return;
     hasFetchedMoviesRef.current = true;
     
     const fetchInitialMovies = async () => {
+      pageRef.current = 1;
       movieListRef.current?.classList.add("hidden");
       loadingRef.current?.classList.remove("hidden");
 
       setIsLoading(true);
       await fetchMovies(true);
-      pageRef.current = 1;
       hasFetchedMoviesRef.current = false;
     }
 
     fetchInitialMovies();
-  }, [category]);
+  }, [category, genreId]);
+
+  useEffect(() => {
+    if (genreId === undefined) return;
+        
+    const fetchInitialFilteredMovies = async () => {
+      pageRef.current = 1;
+      movieListRef.current?.classList.add("hidden");
+      loadingRef.current?.classList.remove("hidden");
+
+      setIsLoading(true);
+      setMovies([]);
+      await fetchFilteredMovies(true);
+    }
+
+    fetchInitialFilteredMovies();
+  }, [genreId]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -86,7 +130,11 @@ export const useMovieList = () => {
         if (entries[0].isIntersecting) {
           setIsLoading(true);
           pageRef.current += 1;
-          fetchMovies();
+          if (genreId !== undefined) {
+            fetchFilteredMovies();
+          } else {
+            fetchMovies();
+          }
         }
       },
       {
@@ -104,7 +152,7 @@ export const useMovieList = () => {
     return () => {
       if (currentRef) observer.unobserve(currentRef);
     };
-  }, []);
+  }, [genreId, isLoading]);
 
   return {
     movies,
