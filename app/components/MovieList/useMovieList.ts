@@ -15,6 +15,8 @@ export const useMovieList = () => {
   const [genres, setGenres] = useState<GenreTypes[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const hasFetchedGenresRef = useRef(false);
+  const hasFetchedMoviesRef = useRef(false);
   const pageRef = useRef(1);
 
   const fetchMovies = async (isNewCategory = false) => {
@@ -45,12 +47,9 @@ export const useMovieList = () => {
   };
 
   useEffect(() => {
-    setIsLoading(true);
+    if (hasFetchedGenresRef.current) return;
+    hasFetchedGenresRef.current = true;
 
-    fetchMovies();
-  }, [category]);
-
-  useEffect(() => {
     const fetchGenres = async () => {
       try {
         const res = await fetch("/api/genres");
@@ -65,18 +64,23 @@ export const useMovieList = () => {
   }, []);
 
   useEffect(() => {
-    if (category !== "") {
+    if (hasFetchedMoviesRef.current) return;
+    hasFetchedMoviesRef.current = true;
+    
+    const fetchInitialMovies = async () => {
       movieListRef.current?.classList.add("hidden");
       loadingRef.current?.classList.remove("hidden");
 
       setIsLoading(true);
-      fetchMovies(true);
+      await fetchMovies(true);
       pageRef.current = 1;
+      hasFetchedMoviesRef.current = false;
     }
+
+    fetchInitialMovies();
   }, [category]);
 
   useEffect(() => {
-    console.log("Setting up IntersectionObserver");
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {

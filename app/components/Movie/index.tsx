@@ -51,11 +51,11 @@ export const Movie = ({ movie, genres }: MoviePropTypes) => {
       >
         <div className="z-10 grid auto-rows-min grid-cols-[3fr_1fr] gap-4 p-1">
           <p
-            className={`pr-4 !text-lg leading-none font-semibold text-neutral-950 md:!text-xl lg:!text-2xl ${hook.isOpen ? "" : "line-clamp-2"}`}
+            className={`pr-4 !text-lg font-semibold text-neutral-950 md:!text-xl lg:!text-2xl ${hook.isOpen ? "" : "line-clamp-2"}`}
           >
             {movie.title}
           </p>
-          <p className="font-space-mono leading-none text-neutral-600">
+          <p className="font-space-mono text-neutral-600">
             <span className="block">
               {new Date(movie.release_date).toLocaleString("default", {
                 month: "long",
