@@ -10,10 +10,10 @@ import {
   CameraIcon,
 } from "@phosphor-icons/react";
 import { IconButton } from "@/app/components/";
-import { MoviePropTypes } from "./types";
+import { MovieCardPropTypes } from "./types";
 import { useMovie } from "./useMovie";
 
-export const Movie = ({ movie, genres }: MoviePropTypes) => {
+export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
   const hook = useMovie();
 
   const matchingMovieGenres = genres.map((genre) => {
@@ -77,21 +77,21 @@ export const Movie = ({ movie, genres }: MoviePropTypes) => {
         </div>
         <div className="relative rounded-2xl border border-neutral-950/10">
           <div
-            className={`absolute right-2 bottom-2 z-20 flex flex-row gap-1 transition-opacity duration-300 ease-in-out md:group-hover:opacity-100 ${hook.isOpen ? "md:opacity-100" : "md:opacity-0"}`}
+            className={`absolute right-2 bottom-2 z-20 flex flex-row gap-1 transition-opacity duration-300 ease-in-out md:group-focus-within:opacity-100 md:group-hover:opacity-100 ${hook.isOpen ? "md:opacity-100" : "md:opacity-0"}`}
           >
             <IconButton
               name={`add ${movie.title} to favourites`}
               icon={
                 <HeartIcon className="text-neutral-950 transition-transform duration-300 ease-in-out hover:-rotate-15" />
               }
-              additionalClasses={`md:group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-20 ${hook.isOpen ? "md:translate-x-0" : "md:translate-x-full "}`}
+              additionalClasses={`md:group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-20 group-focus:translate-x-0 md:group-focus-within:translate-x-0 ${hook.isOpen ? "md:translate-x-0 md:pointer-events-none" : "md:translate-x-full"}`}
             />
             <IconButton
               name={`add ${movie.title} to watchlist`}
               icon={
                 <BookmarkSimpleIcon className="text-neutral-950 transition-transform duration-300 ease-in-out hover:-translate-y-0.5" />
               }
-              additionalClasses={`z-10 md:group-hover:translate-x-0 transition-transform duration-300 ease-in-out ${hook.isOpen ? "md:translate-x-0" : "md:translate-x-1/2"}`}
+              additionalClasses={`z-10 md:group-hover:translate-x-0 transition-transform duration-300 ease-in-out group-focus:translate-x-0 md:group-focus-within:translate-x-0 ${hook.isOpen ? "md:translate-x-0" : "md:translate-x-1/2"}`}
             />
             <IconButton
               name={`view ${movie.title} details`}
@@ -115,7 +115,7 @@ export const Movie = ({ movie, genres }: MoviePropTypes) => {
             {movie.backdrop_path ? (
               <Image
                 loading="lazy"
-                className={`transition-scale aspect-video duration-300 group-hover:scale-105 ${hook.isOpen ? "scale-105" : ""}`}
+                className={`transition-scale aspect-video w-full duration-300 group-hover:scale-105 ${hook.isOpen ? "scale-105" : ""}`}
                 src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
                 alt={movie.title}
                 width={500}

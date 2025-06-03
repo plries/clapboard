@@ -10,7 +10,6 @@ export const useMovieList = ({
   const category = searchParams.get("category") || "popular";
   const bottomRef = useRef<HTMLDivElement>(null);
   const movieListRef = useRef<HTMLDivElement>(null);
-  const loadingRef = useRef<SVGSVGElement>(null);
 
   const [movies, setMovies] = useState<MovieTypes[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -22,6 +21,8 @@ export const useMovieList = ({
   const pageRef = useRef(1);
 
   const fetchMovies = async (isNewCategory = false) => {
+    setIsLoading(true);
+
     try {
       const res = await fetch(
         `/api/movies?category=${category}&page=${pageRef.current}`,
@@ -29,10 +30,9 @@ export const useMovieList = ({
       const data = await res.json();
 
       if (isNewCategory) {
-        genreId = undefined;
+        genreId = 0;
         setMovies(data.results);
         movieListRef.current?.classList.remove("hidden");
-        loadingRef.current?.classList.add("hidden");
       } else {
         setMovies((prev) => {
           const existingIds = new Set(prev.map((m) => m.id));
@@ -50,6 +50,9 @@ export const useMovieList = ({
   };
 
   const fetchFilteredMovies = async (isNewGenre = false) => {
+    if (genreId === 0) return;
+    setIsLoading(true);
+    
     try {
       const res = await fetch(
         `/api/movies?with_genres=${genreId}&page=${pageRef.current}`,
@@ -59,7 +62,6 @@ export const useMovieList = ({
       if (isNewGenre) {
         setMovies(data.results);
         movieListRef.current?.classList.remove("hidden");
-        loadingRef.current?.classList.add("hidden");
       } else {
         setMovies((prev) => {
           const existingIds = new Set(prev.map((m) => m.id));
@@ -69,6 +71,8 @@ export const useMovieList = ({
           return [...prev, ...newMovies];
         });
       }
+
+      setIsLoading(false);
     } catch (err) {
       setError("failed to load movies");
     }
@@ -92,14 +96,13 @@ export const useMovieList = ({
   }, []);
 
   useEffect(() => {
-    if (hasFetchedMoviesRef.current || genreId !== undefined) return;
+    if (hasFetchedMoviesRef.current || genreId !== 0) return;
     hasFetchedMoviesRef.current = true;
     
     const fetchInitialMovies = async () => {
       pageRef.current = 1;
-      movieListRef.current?.classList.add("hidden");
-      loadingRef.current?.classList.remove("hidden");
 
+      movieListRef.current?.classList.add("hidden");
       setIsLoading(true);
       await fetchMovies(true);
       hasFetchedMoviesRef.current = false;
@@ -109,13 +112,12 @@ export const useMovieList = ({
   }, [category, genreId]);
 
   useEffect(() => {
-    if (genreId === undefined) return;
+    if (genreId === 0) return;
         
     const fetchInitialFilteredMovies = async () => {
       pageRef.current = 1;
-      movieListRef.current?.classList.add("hidden");
-      loadingRef.current?.classList.remove("hidden");
 
+      movieListRef.current?.classList.add("hidden");
       setIsLoading(true);
       setMovies([]);
       await fetchFilteredMovies(true);
@@ -130,7 +132,7 @@ export const useMovieList = ({
         if (entries[0].isIntersecting) {
           setIsLoading(true);
           pageRef.current += 1;
-          if (genreId !== undefined) {
+          if (genreId !== 0) {
             fetchFilteredMovies();
           } else {
             fetchMovies();
@@ -163,7 +165,6 @@ export const useMovieList = ({
     setIsLoading,
     bottomRef,
     movieListRef,
-    loadingRef,
     fetchMovies,
   };
 };

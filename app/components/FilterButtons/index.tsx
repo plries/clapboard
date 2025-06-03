@@ -14,8 +14,8 @@ export const FilterButtons = () => {
   });
 
   return (
-    <div className="grid grid-cols-1 gap-2">
-      <div className="flex flex-row flex-wrap gap-2">
+    <div className="grid grid-cols-1 gap-4 pb-1">
+      <div className="relative flex flex-row flex-wrap gap-1 rounded-3xl border border-neutral-50/25 p-1 md:rounded-full">
         {PAGE_CONST.BUTTONS.map((button) => (
           <Button
             key={button.value}
@@ -24,23 +24,38 @@ export const FilterButtons = () => {
             onClick={() => {
               hook.updateCategory(button.value);
             }}
-            additionalClasses={
-              button.value === hook.category
-                ? "bg-neutral-50 border-neutral-950/25"
-                : "bg-neutral-500 border-neutral-50/25 text-neutral-50"
-            }
+            additionalClasses={`
+              rounded-full text-nowrap w-full md:w-fit justify-start 
+              ${
+                button.value !== hook.category ||
+                useDropdownHook.selectedOption.id !== 0
+                  ? "text-neutral-400 border-transparent hover:bg-neutral-50/5 !shadow-none"
+                  : "bg-neutral-50 border-neutral-50 text-neutral-700"
+              }
+            `}
+            disabled={useDropdownHook.selectedOption.id !== 0}
           />
         ))}
       </div>
-      <Dropdown
-        options={movieListHook.genres}
-        label={PAGE_CONST.DROPDOWNS.GENRES}
-        toggleDropdown={useDropdownHook.toggleDropdown}
-        isOpen={useDropdownHook.isOpen}
-        updateSelectedOption={useDropdownHook.updateSelectedOption}
-        selectedOption={useDropdownHook.selectedOption}
-        type="genres"
-      />
+      <div className="sticky left-0 z-20">
+        <Dropdown
+          options={movieListHook.genres}
+          label={PAGE_CONST.DROPDOWNS.GENRES}
+          toggleDropdown={useDropdownHook.toggleDropdown}
+          isOpen={useDropdownHook.isOpen}
+          updateSelectedOption={useDropdownHook.updateSelectedOption}
+          selectedOption={useDropdownHook.selectedOption}
+          type="genres"
+          additionalClasses={{
+            button:
+              useDropdownHook.selectedOption.id !== 0
+                ? "bg-neutral-50 border-neutral-50 text-neutral-700"
+                : "",
+          }}
+          dropdownRef={useDropdownHook.dropdownRef}
+          buttonRef={useDropdownHook.buttonRef}
+        />
+      </div>
     </div>
   );
 };

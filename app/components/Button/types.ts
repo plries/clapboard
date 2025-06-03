@@ -4,4 +4,6 @@ export type ButtonPropTypes = {
   onClick?: () => void
   additionalClasses?: string
   iconRight?: boolean
+  disabled?: boolean
+  buttonRef?: React.RefObject<HTMLButtonElement | null>
 };

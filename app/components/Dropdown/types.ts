@@ -8,9 +8,11 @@ export type DropdownPropTypes = {
     dropdown?: string;
     dropdownItem?: string;
   };
-  toggleDropdown: () => void;
+  toggleDropdown: (value: boolean) => void;
   isOpen: boolean;
   updateSelectedOption: (option: { id: number; name: string }, type: string) => void;
   selectedOption: { id: number; name: string };
   type: "genres" | string;
+  buttonRef?: React.RefObject<HTMLButtonElement | null>;
+  dropdownRef?: React.RefObject<HTMLDivElement | null>;
 };
