@@ -39,6 +39,7 @@ export const FilterButtons = () => {
         isOpen={useDropdownHook.isOpen}
         updateSelectedOption={useDropdownHook.updateSelectedOption}
         selectedOption={useDropdownHook.selectedOption}
+        type="genres"
       />
     </div>
   );

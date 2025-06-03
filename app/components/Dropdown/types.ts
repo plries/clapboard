@@ -10,6 +10,7 @@ export type DropdownPropTypes = {
   };
   toggleDropdown: () => void;
   isOpen: boolean;
-  updateSelectedOption: (option: { id: number; name: string }) => void;
+  updateSelectedOption: (option: { id: number; name: string }, type: string) => void;
   selectedOption: { id: number; name: string };
+  type: "genres" | string;
 };

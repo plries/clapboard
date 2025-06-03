@@ -15,11 +15,13 @@ export const useDropdown = () => {
     setIsOpen(!isOpen);
   };
   
-  const updateSelectedOption = (option: { id: number; name: string }) => {
+  const updateSelectedOption = (option: { id: number; name: string }, type: string) => {
     setSelectedOption(option);
     setIsOpen(false);
     const params = new URLSearchParams(searchParams);
-    params.set("with_genres", option.id.toString());
+    if (type === "genres") {
+      params.set("with_genres", option.id.toString());
+    }
     router.push(`?${params.toString()}`);
   };
 
