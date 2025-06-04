@@ -44,7 +44,7 @@ export const useMovieList = ({
       }
 
       setIsLoading(false);
-    } catch (err) {
+    } catch {
       setError("failed to load movies");
     }
   };
@@ -73,7 +73,7 @@ export const useMovieList = ({
       }
 
       setIsLoading(false);
-    } catch (err) {
+    } catch {
       setError("failed to load movies");
     }
   }
@@ -87,7 +87,7 @@ export const useMovieList = ({
         const res = await fetch("/api/genres");
         const data = await res.json();
         setGenres(data.genres);
-      } catch (err) {
+      } catch {
         setError("failed to load genres");
       }
     };
@@ -109,7 +109,7 @@ export const useMovieList = ({
     }
 
     fetchInitialMovies();
-  }, [category, genreId]);
+  }, [category, genreId, fetchMovies]);
 
   useEffect(() => {
     if (genreId === 0) return;
@@ -124,7 +124,7 @@ export const useMovieList = ({
     }
 
     fetchInitialFilteredMovies();
-  }, [genreId]);
+  }, [genreId, fetchFilteredMovies]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -154,7 +154,7 @@ export const useMovieList = ({
     return () => {
       if (currentRef) observer.unobserve(currentRef);
     };
-  }, [genreId, isLoading]);
+  }, [genreId, isLoading, fetchFilteredMovies, fetchMovies]);
 
   return {
     movies,

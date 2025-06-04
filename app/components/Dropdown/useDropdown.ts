@@ -1,3 +1,4 @@
+"use client";
 import { useState, useRef, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -43,11 +44,9 @@ export const useDropdown = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  })
+  }, [])
 
   useEffect(() => {
-    console.log(dropdownRef)
-
     const updatePosition = () => {
       if (buttonRef.current) {
         const rect = buttonRef.current.getBoundingClientRect();
@@ -55,7 +54,6 @@ export const useDropdown = () => {
           top: rect.bottom + window.scrollY,
           left: rect.left + window.scrollX,
         });
-        console.log(dropdownPosition)
       }
     };    
 

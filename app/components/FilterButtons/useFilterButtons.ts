@@ -22,7 +22,7 @@ export const useFilterButtons = ({
     setSelectedCategory(categoryOptions.filter((c) => c.value === category));
   }
 
-  const calcuateButtonValues = () => {
+  const calculateButtonValues = () => {
     const newHeights: Record<string, number> = {};
     const newWidths: Record<string, number> = {};
     const newPositions: Record<string, number> = {};
@@ -42,12 +42,12 @@ export const useFilterButtons = ({
   }
 
   useEffect(() => {
-    calcuateButtonValues();
+    calculateButtonValues();
 
     window.addEventListener("resize", () => {
-      calcuateButtonValues();
+      calculateButtonValues();
     })
-  }, []);
+  }, [calculateButtonValues]);
 
   return {
     updateCategory,

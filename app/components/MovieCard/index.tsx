@@ -20,7 +20,7 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
   const hook = useMovie();
 
   const matchingMovieGenres = genres.map((genre) => {
-    let match = movie.genre_ids.includes(genre.id);
+    const match = movie.genre_ids.includes(genre.id);
     if (match) {
       return {
         id: genre.id,

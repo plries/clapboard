@@ -7,12 +7,30 @@ import {
 } from "@phosphor-icons/react";
 
 export const PAGE_CONST = {
-  HEADING: ["the ", <span className="text-slate-400">movie</span>, " database"],
+  HEADING: [
+    "the ",
+    <span key="movie" className="text-slate-400">
+      movie
+    </span>,
+    " database",
+  ],
   BUTTONS: [
-    { label: "popular", value: "popular", icon: <SparkleIcon /> },
-    { label: "now playing", value: "now_playing", icon: <FilmReelIcon /> },
-    { label: "top rated", value: "top_rated", icon: <ShootingStarIcon /> },
-    { label: "upcoming", value: "upcoming", icon: <CalendarDotsIcon /> },
+    { label: "popular", value: "popular", icon: <SparkleIcon key="sparkle" /> },
+    {
+      label: "now playing",
+      value: "now_playing",
+      icon: <FilmReelIcon key="film" />,
+    },
+    {
+      label: "top rated",
+      value: "top_rated",
+      icon: <ShootingStarIcon key="star" />,
+    },
+    {
+      label: "upcoming",
+      value: "upcoming",
+      icon: <CalendarDotsIcon key="calendar" />,
+    },
   ],
   DROPDOWNS: {
     GENRES: {
