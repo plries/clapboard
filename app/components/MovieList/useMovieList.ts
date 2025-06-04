@@ -109,7 +109,7 @@ export const useMovieList = ({
     }
 
     fetchInitialMovies();
-  }, [category, genreId, fetchMovies]);
+  }, [category, genreId]);
 
   useEffect(() => {
     if (genreId === 0) return;
@@ -124,7 +124,7 @@ export const useMovieList = ({
     }
 
     fetchInitialFilteredMovies();
-  }, [genreId, fetchFilteredMovies]);
+  }, [genreId]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -154,7 +154,7 @@ export const useMovieList = ({
     return () => {
       if (currentRef) observer.unobserve(currentRef);
     };
-  }, [genreId, isLoading, fetchFilteredMovies, fetchMovies]);
+  }, [genreId, isLoading]);
 
   return {
     movies,

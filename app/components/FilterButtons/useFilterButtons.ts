@@ -47,7 +47,7 @@ export const useFilterButtons = ({
     window.addEventListener("resize", () => {
       calculateButtonValues();
     })
-  }, [calculateButtonValues]);
+  }, []);
 
   return {
     updateCategory,
