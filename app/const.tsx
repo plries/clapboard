@@ -38,4 +38,5 @@ export const PAGE_CONST = {
       ALL_GENRES: "all genres",
     },
   },
+  BACK_TO_TOP: "back to top",
 };

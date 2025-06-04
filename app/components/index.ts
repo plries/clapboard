@@ -1,4 +1,5 @@
 export * from "./Button";
+export * from "./BackToTop";
 export * from "./ClientOnly";
 export * from "./FilterButtons";
 export * from "./PageHeading";

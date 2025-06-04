@@ -14,10 +14,10 @@ import {
 } from "@phosphor-icons/react";
 import { IconButton } from "@/app/components/";
 import { MovieCardPropTypes } from "./types";
-import { useMovie } from "./useMovie";
+import { useMovieCard } from "./useMovieCard";
 
 export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
-  const hook = useMovie();
+  const hook = useMovieCard();
 
   const matchingMovieGenres = genres.map((genre) => {
     const match = movie.genre_ids.includes(genre.id);
@@ -82,7 +82,7 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
         </div>
         <div className="relative rounded-2xl border border-neutral-950/10">
           {movie.popularity > 200 && (
-            <div className="absolute bottom-2 left-2 z-20 flex flex-row items-center gap-1 rounded-full border border-slate-50/10 bg-slate-600 px-3 py-2 !text-sm leading-none text-slate-50 shadow-md md:!text-base">
+            <div className="absolute bottom-2 left-2 z-20 flex flex-row items-center gap-1 rounded-full border border-slate-50/10 bg-slate-600/75 px-3 py-2 !text-sm leading-none text-slate-50 shadow-md backdrop-blur-md md:!text-base">
               <FireIcon size={16} />
               <span className="mb-0.5">trending</span>
             </div>
@@ -95,7 +95,7 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
               icon={
                 <HeartIcon className="text-slate-950 transition-transform duration-300 ease-in-out hover:-rotate-15" />
               }
-              additionalClasses={`md:group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-20 group-focus:translate-x-0 md:group-focus-within:translate-x-0 ${hook.isOpen ? "md:translate-x-0 md:pointer-events-none" : "md:translate-x-full"}`}
+              additionalClasses={`md:group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-20 group-focus:translate-x-0 md:group-focus-within:translate-x-0 ${hook.isOpen ? "md:translate-x-0" : "md:translate-x-full"}`}
             />
             <IconButton
               name={`add ${movie.title} to watchlist`}
@@ -122,7 +122,7 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
           <div
             className={`mask-gradient absolute bottom-0 z-10 h-1/2 w-full rounded-b-2xl backdrop-blur-lg transition-all duration-300 group-hover:backdrop-blur-none ${hook.isOpen ? "!backdrop-blur-none" : ""}`}
           />
-          <div className="overflow-hidden rounded-2xl">
+          <div className="overflow-hidden rounded-xl">
             {movie.backdrop_path ? (
               <>
                 <Image
@@ -173,11 +173,11 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
           </div>
         </div>
         <div
-          className={`absolute grid hidden h-full place-items-center transition-[opacity,padding] duration-300 ease-in-out md:block ${hook.xPosition === "right" ? "right-0 translate-x-full" : "left-0 -translate-x-full"} ${hook.isOpen ? "px-6" : "pointer-events-none opacity-0"}`}
+          className={`absolute top-0 grid hidden h-full place-items-center transition-[opacity,padding] duration-300 ease-in-out md:block ${hook.xPosition === "right" ? "right-0 translate-x-full" : "left-0 -translate-x-full"} ${hook.isOpen ? "px-4" : "pointer-events-none opacity-0"}`}
         >
           <Image
             loading="lazy"
-            className={`${hook.xPosition === "right" && hook.isOpen ? "!rotate-2" : hook.isOpen ? "!-rotate-2" : ""} w-48 rotate-0 rounded-lg border border-neutral-300 shadow-xl transition-[rotate] duration-300 ease-in-out`}
+            className={`h-full w-full rotate-0 rounded-2xl border border-neutral-300 shadow-xl transition-[rotate] duration-300 ease-in-out`}
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
             alt={movie.title}
             width={500}

@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 
-export const useMovie = () => {
+export const useMovieCard = () => {
   const movieRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -29,9 +29,10 @@ export const useMovie = () => {
   };
 
   const toggleModal = () => {
+    
     calculatePosition()
     const nextState = !isOpen;
-    document.body.style.overflow = nextState ? "hidden" : "auto";
+    document.documentElement.style.overflow = nextState ? "hidden" : "auto";
 
     if (nextState) {
       movieRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });

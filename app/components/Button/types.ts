@@ -1,9 +1,14 @@
 export type ButtonPropTypes = {
-  label: string
+  children: React.ReactNode
   icon?: React.ReactNode
   onClick?: () => void
-  additionalClasses?: string
+  additionalClasses?: {
+    button?: string;
+    text?: string;
+  }
   iconRight?: boolean
   disabled?: boolean
   buttonRef?: React.RefObject<HTMLButtonElement | null> | ((el: HTMLButtonElement | null) => void) 
+  onMouseOver?: () => void
+  onMouseOut?: () => void
 };

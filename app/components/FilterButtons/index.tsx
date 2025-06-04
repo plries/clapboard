@@ -26,23 +26,25 @@ export const FilterButtons = () => {
           return (
             <Button
               key={button.value}
-              label={button.label}
               icon={button.icon}
               onClick={() => {
                 hook.updateCategory(button.value);
               }}
-              additionalClasses={`
-              rounded-full w-full justify-start text-nowrap md:justify-center z-10 border-transparent !shadow-none
-              ${
-                button.value !== hook.category ||
-                useDropdownHook.selectedOption.id !== 0
-                  ? "text-neutral-50/75 hover:bg-slate-300/30 disabled:hover:bg-transparent"
-                  : "text-slate-950 bg-neutral-50 md:bg-transparent"
-              }
-            `}
+              additionalClasses={{
+                button: `rounded-full w-full justify-start text-nowrap md:justify-center z-10 border-transparent !shadow-none
+                ${
+                  button.value !== hook.category ||
+                  useDropdownHook.selectedOption.id !== 0
+                    ? "text-neutral-50/75 hover:bg-slate-300/30 hover:border-neutral-50/10 disabled:hover:bg-transparent"
+                    : "text-slate-950 bg-neutral-50  md:bg-transparent"
+                }
+                `,
+              }}
               disabled={useDropdownHook.selectedOption.id !== 0}
               buttonRef={buttonRef}
-            />
+            >
+              {button.label}
+            </Button>
           );
         })}
         <div
