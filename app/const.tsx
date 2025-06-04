@@ -15,6 +15,9 @@ export const PAGE_CONST = {
     { label: "upcoming", value: "upcoming", icon: <CalendarDotsIcon /> },
   ],
   DROPDOWNS: {
-    GENRES: "genres",
+    GENRES: {
+      BUTTON: "genres",
+      ALL_GENRES: "all genres",
+    }
   },
 };

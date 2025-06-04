@@ -9,7 +9,7 @@ export const IconButton = ({
 }: IconButtonPropTypes) => {
   return (
     <button
-      className={`group grid h-10 w-10 cursor-pointer place-items-center rounded-full border border-neutral-950/25 bg-neutral-200 p-2 shadow-md disabled:opacity-50 ${additionalClasses ?? ""}`}
+      className={`group grid h-10 w-10 cursor-pointer place-items-center rounded-full border border-neutral-950/25 bg-slate-100 p-2 shadow-md disabled:opacity-50 ${additionalClasses ?? ""}`}
       name={name}
       onClick={onClick}
       disabled={disabled}

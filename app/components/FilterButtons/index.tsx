@@ -36,8 +36,8 @@ export const FilterButtons = () => {
               ${
                 button.value !== hook.category ||
                 useDropdownHook.selectedOption.id !== 0
-                  ? "text-neutral-400 hover:bg-neutral-50/5"
-                  : "text-neutral-700 bg-neutral-50 md:bg-transparent"
+                  ? "text-neutral-50/75 hover:bg-neutral-50/15"
+                  : "text-slate-950 bg-neutral-50 md:bg-transparent"
               }
             `}
               disabled={useDropdownHook.selectedOption.id !== 0}
@@ -46,7 +46,7 @@ export const FilterButtons = () => {
           );
         })}
         <div
-          className={`absolute top-1 left-0 hidden rounded-full bg-neutral-50 transition-all duration-300 ease-in-out md:block ${
+          className={`absolute top-1 left-0 hidden rounded-full bg-slate-50 inset-shadow-sm inset-shadow-slate-950/50 transition-all duration-300 ease-in-out md:block ${
             useDropdownHook.selectedOption.id !== 0
               ? "opacity-0"
               : "opacity-100"
@@ -61,16 +61,16 @@ export const FilterButtons = () => {
       <div className="sticky left-0 z-20">
         <Dropdown
           options={movieListHook.genres}
-          label={PAGE_CONST.DROPDOWNS.GENRES}
+          label={PAGE_CONST.DROPDOWNS.GENRES.BUTTON}
           toggleDropdown={useDropdownHook.toggleDropdown}
           isOpen={useDropdownHook.isOpen}
           updateSelectedOption={useDropdownHook.updateSelectedOption}
           selectedOption={useDropdownHook.selectedOption}
-          type="genres"
+          type={PAGE_CONST.DROPDOWNS.GENRES.BUTTON}
           additionalClasses={{
             button:
               useDropdownHook.selectedOption.id !== 0
-                ? "bg-neutral-50 border-neutral-50 text-neutral-700"
+                ? "bg-slate-50 border-slate-50 !text-slate-950"
                 : "",
           }}
           dropdownRef={useDropdownHook.dropdownRef}

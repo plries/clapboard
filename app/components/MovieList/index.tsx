@@ -16,7 +16,7 @@ export const MovieList = () => {
     <>
       <div
         ref={hook.movieListRef}
-        className="grid auto-rows-min grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
+        className="grid auto-rows-min grid-cols-1 gap-4 text-neutral-50 md:grid-cols-2 lg:grid-cols-3"
       >
         {hook.movies.map((movie) => (
           <MovieCard

@@ -43,19 +43,19 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{
-          duration: 0.7,
+          duration: 0.3,
           ease: "easeInOut",
         }}
-        className={`font-dm-sans group relative flex h-fit h-full w-full flex-col justify-between gap-2 rounded-2xl border border-neutral-300 bg-gradient-to-b from-neutral-50 to-neutral-400 p-1 shadow-xl ${hook.isOpen ? "z-50" : "z-10"}`}
+        className={`font-dm-sans group relative flex h-fit h-full w-full flex-col justify-between gap-2 rounded-2xl border border-neutral-300 bg-gradient-to-b from-slate-50 to-slate-400 p-1 shadow-xl ${hook.isOpen ? "z-50" : "z-10"}`}
         key={movie.id}
       >
         <div className="z-10 grid auto-rows-min grid-cols-[3fr_1fr] gap-4 p-1">
           <p
-            className={`pr-4 !text-lg font-semibold text-neutral-950 md:!text-xl lg:!text-2xl ${hook.isOpen ? "" : "line-clamp-2"}`}
+            className={`pr-4 !text-lg font-semibold text-slate-950 md:!text-xl lg:!text-2xl ${hook.isOpen ? "" : "line-clamp-2"}`}
           >
             {movie.title}
           </p>
-          <p className="font-space-mono text-neutral-600">
+          <p className="font-space-mono text-slate-950/75">
             <span className="block">
               {new Date(movie.release_date).toLocaleString("default", {
                 month: "long",
@@ -68,7 +68,7 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
             {movieGenres.map((genre) => (
               <p
                 key={genre && genre.id}
-                className="font-space-mono h-fit rounded-full border border-neutral-500/10 bg-neutral-300/50 px-2 py-1 !text-sm leading-normal text-neutral-600 inset-shadow-sm md:!text-base"
+                className="font-space-mono h-fit rounded-full border border-neutral-500/20 bg-neutral-950/1 px-2 py-1 !text-sm leading-normal text-neutral-600 inset-shadow-sm inset-shadow-slate-950/10 md:!text-base"
               >
                 {genre && genre.name}
               </p>
@@ -82,14 +82,14 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
             <IconButton
               name={`add ${movie.title} to favourites`}
               icon={
-                <HeartIcon className="text-neutral-950 transition-transform duration-300 ease-in-out hover:-rotate-15" />
+                <HeartIcon className="text-slate-950 transition-transform duration-300 ease-in-out hover:-rotate-15" />
               }
               additionalClasses={`md:group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-20 group-focus:translate-x-0 md:group-focus-within:translate-x-0 ${hook.isOpen ? "md:translate-x-0 md:pointer-events-none" : "md:translate-x-full"}`}
             />
             <IconButton
               name={`add ${movie.title} to watchlist`}
               icon={
-                <BookmarkSimpleIcon className="text-neutral-950 transition-transform duration-300 ease-in-out hover:-translate-y-0.5" />
+                <BookmarkSimpleIcon className="text-slate-950 transition-transform duration-300 ease-in-out hover:-translate-y-0.5" />
               }
               additionalClasses={`z-10 md:group-hover:translate-x-0 transition-transform duration-300 ease-in-out group-focus:translate-x-0 md:group-focus-within:translate-x-0 ${hook.isOpen ? "md:translate-x-0" : "md:translate-x-1/2"}`}
             />
@@ -98,9 +98,9 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
               icon={
                 <span className="transition-transform duration-300 ease-in-out hover:rotate-10 group-disabled:hover:!rotate-0">
                   {hook.isOpen ? (
-                    <XIcon className="text-neutral-950" />
+                    <XIcon className="text-slate-950" />
                   ) : (
-                    <ArticleIcon className="text-neutral-950" />
+                    <ArticleIcon className="text-slate-950" />
                   )}
                 </span>
               }
@@ -113,20 +113,22 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
           />
           <div className="overflow-hidden rounded-2xl">
             {movie.backdrop_path ? (
-              <Image
-                loading="lazy"
-                className={`transition-scale aspect-video w-full duration-300 group-hover:scale-105 ${hook.isOpen ? "scale-105" : ""}`}
-                src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
-                alt={movie.title}
-                width={500}
-                height={281}
-              />
+              <>
+                <Image
+                  loading="lazy"
+                  className={`transition-scale aspect-video w-full duration-300 group-hover:scale-105 ${hook.isOpen ? "scale-105" : ""}`}
+                  src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
+                  alt={movie.title}
+                  width={500}
+                  height={281}
+                />
+              </>
             ) : (
-              <div className="grid aspect-video h-full w-full place-items-center bg-neutral-300/50 inset-shadow-sm">
+              <div className="grid aspect-video h-full w-full place-items-center inset-shadow-sm inset-shadow-slate-950/10">
                 <CameraIcon
                   size={64}
                   weight="light"
-                  className="text-neutral-950/25"
+                  className="text-slate-950/25"
                 />
               </div>
             )}
@@ -136,7 +138,7 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
           ref={hook.dropdownRef}
           className={`absolute left-0 h-full w-full transition-[opacity,margin] duration-300 ease-in-out ${hook.position === "bottom" ? "top-0 origin-top translate-y-full" : "bottom-0 grid origin-bottom -translate-y-full place-items-end"} ${hook.isOpen ? "my-4" : "pointer-events-none opacity-0"}`}
         >
-          <div className="w-full overflow-hidden rounded-2xl border border-neutral-300 bg-gradient-to-b from-neutral-50 to-neutral-400 p-1 shadow-xl">
+          <div className="w-full overflow-hidden rounded-2xl border border-neutral-300 bg-gradient-to-b from-neutral-50 to-slate-400 p-1 shadow-xl">
             <p className="rounded-xl border border-neutral-500/25 p-2 !text-sm leading-normal text-neutral-600 md:!text-base">
               {movie.overview ? movie.overview : "no overview available."}
             </p>
