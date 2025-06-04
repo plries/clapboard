@@ -5,5 +5,5 @@ export type ButtonPropTypes = {
   additionalClasses?: string
   iconRight?: boolean
   disabled?: boolean
-  buttonRef?: (el: HTMLButtonElement | null) => void | React.RefObject<HTMLButtonElement | null> 
+  buttonRef?: React.RefObject<HTMLButtonElement | null> | ((el: HTMLButtonElement | null) => void) 
 };

@@ -13,6 +13,7 @@ export const useDropdown = () => {
     id: Number(searchParams.get("with_genres") || 0),
     name: "",
   });
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
     
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -44,6 +45,29 @@ export const useDropdown = () => {
     };
   })
 
+  useEffect(() => {
+    console.log(dropdownRef)
+
+    const updatePosition = () => {
+      if (buttonRef.current) {
+        const rect = buttonRef.current.getBoundingClientRect();
+        setDropdownPosition({
+          top: rect.bottom + window.scrollY,
+          left: rect.left + window.scrollX,
+        });
+        console.log(dropdownPosition)
+      }
+    };    
+
+    requestAnimationFrame(updatePosition);
+    const handleResize = () => requestAnimationFrame(updatePosition);
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [isOpen]);
+
   return {
     isOpen,
     selectedOption,
@@ -51,5 +75,6 @@ export const useDropdown = () => {
     updateSelectedOption,
     buttonRef,
     dropdownRef,
+    dropdownPosition
   };
 };

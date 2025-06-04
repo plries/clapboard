@@ -37,7 +37,7 @@ export const FilterButtons = () => {
                 button.value !== hook.category ||
                 useDropdownHook.selectedOption.id !== 0
                   ? "text-neutral-400 hover:bg-neutral-50/5"
-                  : "text-neutral-700"
+                  : "text-neutral-700 bg-neutral-50 md:bg-transparent"
               }
             `}
               disabled={useDropdownHook.selectedOption.id !== 0}
@@ -75,6 +75,7 @@ export const FilterButtons = () => {
           }}
           dropdownRef={useDropdownHook.dropdownRef}
           buttonRef={useDropdownHook.buttonRef}
+          dropdownPosition={useDropdownHook.dropdownPosition}
         />
       </div>
     </div>

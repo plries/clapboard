@@ -15,4 +15,5 @@ export type DropdownPropTypes = {
   type: "genres" | string;
   buttonRef?: React.RefObject<HTMLButtonElement | null>;
   dropdownRef?: React.RefObject<HTMLDivElement | null>;
+  dropdownPosition?: { top: number; left: number };
 };
