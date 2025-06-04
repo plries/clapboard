@@ -22,7 +22,7 @@ export const Dropdown = ({
         iconRight
         additionalClasses={`text-neutral-400 border-neutral-50/25 rounded-full ${additionalClasses?.button ?? ""}`}
         onClick={() => toggleDropdown(true)}
-        buttonRef={buttonRef}
+        buttonRef={() => buttonRef}
       />
       {isOpen && (
         <div
