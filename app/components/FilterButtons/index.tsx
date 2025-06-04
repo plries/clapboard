@@ -16,7 +16,7 @@ export const FilterButtons = () => {
   });
 
   return (
-    <div className="grid grid-cols-1 gap-4 pb-1">
+    <div className="grid w-full grid-cols-1 gap-4 pb-1 md:w-fit">
       <div className="relative flex flex-col gap-1 rounded-3xl border border-neutral-50/25 p-1 md:flex-row md:rounded-full">
         {PAGE_CONST.BUTTONS.map((button) => {
           const buttonRef = (el: HTMLButtonElement | null) => {
@@ -36,7 +36,7 @@ export const FilterButtons = () => {
               ${
                 button.value !== hook.category ||
                 useDropdownHook.selectedOption.id !== 0
-                  ? "text-neutral-50/75 hover:bg-neutral-50/15"
+                  ? "text-neutral-50/75 hover:bg-slate-300/30 disabled:hover:bg-transparent"
                   : "text-slate-950 bg-neutral-50 md:bg-transparent"
               }
             `}

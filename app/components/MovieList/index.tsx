@@ -16,7 +16,7 @@ export const MovieList = () => {
     <>
       <div
         ref={hook.movieListRef}
-        className="grid auto-rows-min grid-cols-1 gap-4 text-neutral-50 md:grid-cols-2 lg:grid-cols-3"
+        className="grid w-full auto-rows-min grid-cols-1 gap-4 text-neutral-50 md:grid-cols-2 lg:grid-cols-3"
       >
         {hook.movies.map((movie) => (
           <MovieCard
@@ -38,7 +38,7 @@ export const MovieList = () => {
           <CircleNotchIcon
             size={64}
             weight="light"
-            className="animate-spin text-neutral-50/10"
+            className="animate-spin text-slate-400"
           />
         </div>
       )}

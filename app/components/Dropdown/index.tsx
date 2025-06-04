@@ -41,7 +41,7 @@ export const Dropdown = ({
             {type === PAGE_CONST.DROPDOWNS.GENRES.BUTTON && (
               <Button
                 label={PAGE_CONST.DROPDOWNS.GENRES.ALL_GENRES}
-                additionalClasses={`lowercase w-full rounded-full !justify-start border-none shadow-none hover:!bg-neutral-50/15 ${additionalClasses?.dropdownItem ?? ""} ${selectedOption.id === 0 ? "bg-neutral-50/10 !text-neutral-50" : ""}`}
+                additionalClasses={`lowercase w-full rounded-full !justify-start border-none shadow-none hover:!bg-slate-300/30 ${additionalClasses?.dropdownItem ?? ""} ${selectedOption.id === 0 ? "bg-slate-300/25 !text-neutral-50" : ""}`}
                 onClick={() =>
                   updateSelectedOption(
                     { id: 0, name: PAGE_CONST.DROPDOWNS.GENRES.ALL_GENRES },
@@ -54,7 +54,7 @@ export const Dropdown = ({
               <Button
                 key={option.id}
                 label={option.name}
-                additionalClasses={`lowercase w-full rounded-full !justify-start border-none shadow-none hover:!bg-neutral-50/15 ${additionalClasses?.dropdownItem ?? ""} ${option.id === selectedOption.id ? "bg-neutral-50/10 !text-neutral-50" : ""}`}
+                additionalClasses={`lowercase w-full rounded-full !justify-start border-none shadow-none hover:!bg-slate-300/30 ${additionalClasses?.dropdownItem ?? ""} ${option.id === selectedOption.id ? "bg-slate-300/25 !text-neutral-50" : ""}`}
                 onClick={() => updateSelectedOption(option, type)}
               />
             ))}

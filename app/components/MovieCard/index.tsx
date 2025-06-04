@@ -49,18 +49,16 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
         className={`font-dm-sans group relative flex h-fit h-full w-full flex-col justify-between gap-2 rounded-2xl border border-neutral-300 bg-gradient-to-b from-slate-50 to-slate-400 p-1 shadow-xl ${hook.isOpen ? "z-50" : "z-10"}`}
         key={movie.id}
       >
-        <div className="z-10 grid auto-rows-min grid-cols-[3fr_1fr] gap-4 p-1">
+        <div className="z-10 grid auto-rows-min grid-cols-[2fr_1fr] gap-4 p-1">
           <p
             className={`pr-4 !text-lg font-semibold text-slate-950 md:!text-xl lg:!text-2xl ${hook.isOpen ? "" : "line-clamp-2"}`}
           >
             {movie.title}
           </p>
-          <p className="font-space-mono text-slate-950/75">
-            <span className="block">
-              {new Date(movie.release_date).toLocaleString("default", {
-                month: "long",
-              })}{" "}
-            </span>
+          <p className="font-space-mono text-right !text-sm text-slate-950/75 md:!text-base">
+            {new Date(movie.release_date).toLocaleString("default", {
+              month: "long",
+            })}{" "}
             {new Date(movie.release_date).getDate()},{" "}
             {new Date(movie.release_date).getFullYear()}
           </p>
@@ -138,11 +136,23 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
           ref={hook.dropdownRef}
           className={`absolute left-0 h-full w-full transition-[opacity,margin] duration-300 ease-in-out ${hook.position === "bottom" ? "top-0 origin-top translate-y-full" : "bottom-0 grid origin-bottom -translate-y-full place-items-end"} ${hook.isOpen ? "my-4" : "pointer-events-none opacity-0"}`}
         >
-          <div className="w-full overflow-hidden rounded-2xl border border-neutral-300 bg-gradient-to-b from-neutral-50 to-slate-400 p-1 shadow-xl">
-            <p className="rounded-xl border border-neutral-500/25 p-2 !text-sm leading-normal text-neutral-600 md:!text-base">
+          <div className="relative w-full rounded-2xl border border-neutral-300 bg-gradient-to-b from-neutral-50 to-slate-400 p-1 shadow-xl">
+            <p className="w-full rounded-xl border border-neutral-500/25 p-2 !text-sm leading-normal text-neutral-600 md:!text-base">
               {movie.overview ? movie.overview : "no overview available."}
             </p>
           </div>
+        </div>
+        <div
+          className={`absolute grid h-full place-items-center transition-[opacity,padding] duration-300 ease-in-out ${hook.xPosition === "right" ? "right-0 translate-x-full" : "left-0 -translate-x-full"} ${hook.isOpen ? "px-6" : "pointer-events-none opacity-0"}`}
+        >
+          <Image
+            loading="lazy"
+            className={`${hook.xPosition === "right" && hook.isOpen ? "!rotate-2" : hook.isOpen ? "!-rotate-2" : ""} w-48 rotate-0 rounded-lg border border-neutral-300 shadow-xl transition-[rotate] duration-300 ease-in-out`}
+            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            alt={movie.title}
+            width={500}
+            height={281}
+          />
         </div>
       </motion.div>
     </IconContext.Provider>

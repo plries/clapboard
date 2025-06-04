@@ -7,6 +7,7 @@ export const useMovie = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState(<Readonly<"top" | "bottom">>"top");
+  const [xPosition, setXPosition] = useState(<Readonly<"right" | "left">>"right");
 
   const calculatePosition = () => {
     const movieRect = movieRef.current?.getBoundingClientRect();
@@ -18,6 +19,12 @@ export const useMovie = () => {
       setPosition("bottom");
     } else {
       setPosition("top");
+    }
+
+    if (movieRect.left < window.innerWidth / 2) {
+      setXPosition("right");
+    } else {
+      setXPosition("left");
     }
   };
 
@@ -56,5 +63,6 @@ export const useMovie = () => {
     position,
     movieRef,
     dropdownRef,
+    xPosition,
   };
 };

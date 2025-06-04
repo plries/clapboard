@@ -7,7 +7,7 @@ import {
 } from "@phosphor-icons/react";
 
 export const PAGE_CONST = {
-  HEADING: "the movie database",
+  HEADING: ["the ", <span className="text-slate-400">movie</span>, " database"],
   BUTTONS: [
     { label: "popular", value: "popular", icon: <SparkleIcon /> },
     { label: "now playing", value: "now_playing", icon: <FilmReelIcon /> },
@@ -18,6 +18,6 @@ export const PAGE_CONST = {
     GENRES: {
       BUTTON: "genres",
       ALL_GENRES: "all genres",
-    }
+    },
   },
 };

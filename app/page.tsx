@@ -9,8 +9,8 @@ export default async function Home() {
   return (
     <div className="grid place-items-center p-4">
       <ClientOnly>
-        <div className="grid max-w-[1440px] place-items-center">
-          <div className="grid max-w-3xl grid-cols-1 gap-8 py-16">
+        <div className="grid max-w-[1440px] grid-cols-1 place-items-center gap-4">
+          <div className="grid h-full w-full grid-cols-1 place-items-center gap-8 place-self-start py-16">
             <PageHeading />
             <FilterButtons />
           </div>
