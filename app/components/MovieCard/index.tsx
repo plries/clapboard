@@ -8,6 +8,9 @@ import {
   ArticleIcon,
   XIcon,
   CameraIcon,
+  CalendarDotsIcon,
+  StarIcon,
+  FireIcon,
 } from "@phosphor-icons/react";
 import { IconButton } from "@/app/components/";
 import { MovieCardPropTypes } from "./types";
@@ -29,6 +32,8 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
   const movieGenres = matchingMovieGenres.filter(
     (genre) => genre !== undefined,
   );
+
+  const starsOutOfFive = Math.round(movie.vote_average / 2);
 
   return (
     <IconContext.Provider value={{ size: 20 }}>
@@ -55,13 +60,15 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
           >
             {movie.title}
           </p>
-          <p className="font-space-mono text-right !text-sm text-slate-950/75 md:!text-base">
-            {new Date(movie.release_date).toLocaleString("default", {
-              month: "long",
-            })}{" "}
-            {new Date(movie.release_date).getDate()},{" "}
-            {new Date(movie.release_date).getFullYear()}
-          </p>
+          <div className="flex w-full flex-row justify-end p-1">
+            {[...Array(5)].map((_, star) => (
+              <StarIcon
+                key={star}
+                weight={star < starsOutOfFive ? "fill" : "regular"}
+                className="text-slate-500"
+              />
+            ))}
+          </div>
           <div className="col-span-2 flex flex-row flex-wrap gap-1">
             {movieGenres.map((genre) => (
               <p
@@ -74,6 +81,12 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
           </div>
         </div>
         <div className="relative rounded-2xl border border-neutral-950/10">
+          {movie.popularity > 200 && (
+            <div className="absolute bottom-2 left-2 z-20 flex flex-row items-center gap-1 rounded-full border border-slate-50/10 bg-slate-600 px-3 py-2 !text-sm leading-none text-slate-50 shadow-md md:!text-base">
+              <FireIcon size={16} />
+              <span className="mb-0.5">trending</span>
+            </div>
+          )}
           <div
             className={`absolute right-2 bottom-2 z-20 flex flex-row gap-1 transition-opacity duration-300 ease-in-out md:group-focus-within:opacity-100 md:group-hover:opacity-100 ${hook.isOpen ? "md:opacity-100" : "md:opacity-0"}`}
           >
@@ -136,14 +149,31 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
           ref={hook.dropdownRef}
           className={`absolute left-0 h-full w-full transition-[opacity,margin] duration-300 ease-in-out ${hook.position === "bottom" ? "top-0 origin-top translate-y-full" : "bottom-0 grid origin-bottom -translate-y-full place-items-end"} ${hook.isOpen ? "my-4" : "pointer-events-none opacity-0"}`}
         >
-          <div className="relative w-full rounded-2xl border border-neutral-300 bg-gradient-to-b from-neutral-50 to-slate-400 p-1 shadow-xl">
-            <p className="w-full rounded-xl border border-neutral-500/25 p-2 !text-sm leading-normal text-neutral-600 md:!text-base">
+          <div className="relative grid w-full grid-cols-1 gap-2 rounded-2xl border border-neutral-300 bg-gradient-to-b from-neutral-50 to-slate-400 p-1 shadow-xl">
+            <div className="font-space-mono flex flex-row items-center justify-between gap-2 rounded-xl border border-neutral-500/25 p-2 text-slate-950/75">
+              <div className="flex flex-row items-center justify-between gap-2">
+                <CalendarDotsIcon size={20} weight="light" />
+                <p className="mb-0.5 leading-none">
+                  <span className="!text-sm md:!text-base">
+                    {new Date(movie.release_date).toLocaleString("default", {
+                      month: "long",
+                    })}{" "}
+                    {new Date(movie.release_date).getDate()},{" "}
+                    {new Date(movie.release_date).getFullYear()}
+                  </span>
+                </p>
+              </div>
+              <p className="mb-0.5 !text-sm leading-none md:!text-base">
+                {movie.vote_count.toLocaleString()} votes
+              </p>
+            </div>
+            <p className="w-full rounded-xl border border-neutral-500/25 p-2 !text-sm text-neutral-600 md:!text-base">
               {movie.overview ? movie.overview : "no overview available."}
             </p>
           </div>
         </div>
         <div
-          className={`absolute grid h-full place-items-center transition-[opacity,padding] duration-300 ease-in-out ${hook.xPosition === "right" ? "right-0 translate-x-full" : "left-0 -translate-x-full"} ${hook.isOpen ? "px-6" : "pointer-events-none opacity-0"}`}
+          className={`absolute grid hidden h-full place-items-center transition-[opacity,padding] duration-300 ease-in-out md:block ${hook.xPosition === "right" ? "right-0 translate-x-full" : "left-0 -translate-x-full"} ${hook.isOpen ? "px-6" : "pointer-events-none opacity-0"}`}
         >
           <Image
             loading="lazy"
