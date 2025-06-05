@@ -32,10 +32,12 @@ export const useMovieCard = () => {
     
     calculatePosition()
     const nextState = !isOpen;
-    document.documentElement.style.overflow = nextState ? "hidden" : "auto";
 
     if (nextState) {
       movieRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      window.addEventListener("resize", () => {
+        movieRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      })
     }
 
     setIsOpen(nextState);
@@ -45,7 +47,6 @@ export const useMovieCard = () => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setIsOpen(false);
-        document.body.style.overflow = "auto";
       }
     };
 
