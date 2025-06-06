@@ -10,20 +10,22 @@ export const useSearchInput = () => {
 
   const [inputValue, setInputValue] = useState(searchParams.get("query") || "");
 
+  const params = new URLSearchParams(searchParams);
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
 
   const handleSubmit = () => {
-    const params = new URLSearchParams(searchParams);
     params.set("query", inputValue);
+    params.delete("category");
     router.push(`?${params.toString()}`);
   };
 
   const handleClear = () => {
-    const params = new URLSearchParams(searchParams);
     setInputValue("");
     params.delete("query");
+    params.delete("with_genres");
     router.push(`?${params.toString()}`);
   };
 
@@ -39,6 +41,8 @@ export const useSearchInput = () => {
       document.removeEventListener("keydown", handleEnter);
     };
   }, [inputValue]);
+
+  // TODO: reset input value when changing category or genre
 
   return {
     inputRef,

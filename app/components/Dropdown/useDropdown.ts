@@ -15,6 +15,8 @@ export const useDropdown = () => {
     name: "",
   });
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
+
+  const params = new URLSearchParams(searchParams);
     
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -23,12 +25,13 @@ export const useDropdown = () => {
   const updateSelectedOption = (option: { id: number; name: string }, type: string) => {
     setSelectedOption(option);
     setIsOpen(false);
-    const params = new URLSearchParams(searchParams);
     if (type === "genres") {
       if (option.id === 0) {
         params.delete("with_genres");
       } else {
         params.set("with_genres", option.id.toString());
+        params.delete("category");
+        params.delete("query");
       }
     }
     router.push(`?${params.toString()}`);
@@ -73,6 +76,7 @@ export const useDropdown = () => {
     updateSelectedOption,
     buttonRef,
     dropdownRef,
-    dropdownPosition
+    dropdownPosition,
+    params,
   };
 };

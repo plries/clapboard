@@ -18,6 +18,8 @@ export const useFilterButtons = ({
   const updateCategory = (category: string) => {
     const params = new URLSearchParams(searchParams);
     params.set("category", category);
+    params.delete("query");
+    params.delete("with_genres");
     router.push(`?${params.toString()}`);
     setSelectedCategory(categoryOptions.filter((c) => c.value === category));
   }
