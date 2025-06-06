@@ -15,7 +15,7 @@ export const PAGE_CONST = {
     " database",
   ],
   INPUTS: {
-    SEARCH: "search...",
+    SEARCH: "search for a movie...",
   },
   BUTTONS: {
     FILTERS: [
@@ -41,6 +41,7 @@ export const PAGE_CONST = {
       },
     ],
     BACK_TO_TOP: "back to top",
+    SEARCH: "search",
   },
   DROPDOWNS: {
     GENRES: {

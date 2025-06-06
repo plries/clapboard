@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
   const category = searchParams.get("category") || "popular";
   const pageRef = searchParams.get("page") || "1";
   const with_genres = searchParams.get("with_genres");
-  const searchMovies = searchParams.get("search");
+  const searchMovies = searchParams.get("query");
 
   const validCategories = ["popular", "top_rated", "now_playing", "upcoming"];
   if (!validCategories.includes(category)) {

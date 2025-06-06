@@ -116,7 +116,7 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
                 </span>
               }
               onClick={hook.toggleModal}
-              disabled={!movie.overview}
+              disabled={!movie.overview && !movie.poster_path && !movie.backdrop_path}
             />
           </div>
           <div
@@ -146,10 +146,10 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
           </div>
         </div>
         <div
-          ref={hook.dropdownRef}
+          ref={hook.descriptionRef}
           className={`absolute left-0 h-full w-full transition-[opacity,margin] duration-300 ease-in-out ${hook.position === "bottom" ? "top-0 origin-top translate-y-full" : "bottom-0 grid origin-bottom -translate-y-full place-items-end"} ${hook.isOpen ? "my-4" : "pointer-events-none opacity-0"}`}
         >
-          <div className="relative grid w-full grid-cols-1 gap-2 rounded-2xl border border-neutral-300 bg-gradient-to-b from-neutral-50 to-slate-400 p-1 shadow-xl">
+          <div className="relative grid h-fit w-full grid-cols-1 gap-2 rounded-2xl border border-neutral-300 bg-gradient-to-b from-neutral-50 to-slate-400 p-1 shadow-xl">
             <div className="font-space-mono flex flex-row items-center justify-between gap-2 rounded-xl border border-neutral-500/25 p-2 text-slate-950/75">
               <div className="flex flex-row items-center justify-between gap-2">
                 <CalendarDotsIcon size={20} weight="light" />
@@ -167,23 +167,27 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
                 {movie.vote_count.toLocaleString()} votes
               </p>
             </div>
-            <p className="w-full rounded-xl border border-neutral-500/25 p-2 !text-sm text-neutral-600 md:!text-base">
-              {movie.overview ? movie.overview : "no overview available."}
-            </p>
+            <div className="description max-h-64 w-full overflow-y-scroll rounded-xl border border-neutral-500/25 p-2">
+              <p className="!text-sm text-neutral-600 md:!text-base">
+                {movie.overview ? movie.overview : "no overview available."}
+              </p>
+            </div>
           </div>
         </div>
-        <div
-          className={`absolute top-0 grid hidden h-full place-items-center transition-[opacity,padding] duration-300 ease-in-out md:block ${hook.xPosition === "right" ? "right-0 translate-x-full" : "left-0 -translate-x-full"} ${hook.isOpen ? "px-4" : "pointer-events-none opacity-0"}`}
-        >
-          <Image
-            loading="lazy"
-            className={`h-full w-full rotate-0 rounded-2xl border border-neutral-300 shadow-xl transition-[rotate] duration-300 ease-in-out`}
-            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-            alt={movie.title}
-            width={500}
-            height={281}
-          />
-        </div>
+        {movie.poster_path && (
+          <div
+            className={`absolute top-0 grid hidden h-full place-items-center transition-[opacity,padding] duration-300 ease-in-out md:block ${hook.xPosition === "right" ? "right-0 translate-x-full" : "left-0 -translate-x-full"} ${hook.isOpen ? "px-4" : "pointer-events-none opacity-0"}`}
+          >
+            <Image
+              loading="lazy"
+              className={`h-full w-full rotate-0 rounded-2xl border border-neutral-300 shadow-xl transition-[rotate] duration-300 ease-in-out`}
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+              alt={movie.title}
+              width={500}
+              height={281}
+            />
+          </div>
+        )}
       </motion.div>
     </IconContext.Provider>
   );

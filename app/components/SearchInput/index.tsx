@@ -1,15 +1,32 @@
-// import { useSearchInput } from "./useSearchInput";
+"use client";
+import { MagnifyingGlassIcon } from "@phosphor-icons/react";
+import { Button } from "../Button";
+import { useSearchInput } from "./useSearchInput";
+import { PAGE_CONST } from "@/app/const";
 
 export const SearchInput = () => {
-  // const hook = useSearchInput();
+  const hook = useSearchInput();
 
   return (
-    <div className="w-full rounded-full border border-neutral-50/25 bg-slate-50 px-4 py-2 outline-4 focus-within:outline-slate-300/30">
+    <div className="flex w-full flex-row items-center justify-center gap-2 rounded-full border border-neutral-50/25 bg-slate-50 px-4 py-2 outline-4 focus-within:outline-slate-300/30">
       <input
+        ref={hook.inputRef}
         className="w-full text-slate-950 placeholder:text-slate-950/50 focus:outline-none"
         type="text"
-        placeholder={"search..."}
+        value={hook.inputValue}
+        placeholder={PAGE_CONST.INPUTS.SEARCH}
+        onChange={hook.handleInputChange}
+        autoFocus
       />
+      <Button
+        additionalClasses={{
+          button: "rounded-full border-slate-400 bg-slate-500 text-slate-50",
+        }}
+        icon={<MagnifyingGlassIcon size={16} />}
+        onClick={hook.handleSubmit}
+      >
+        {PAGE_CONST.BUTTONS.SEARCH}
+      </Button>
     </div>
   );
 };

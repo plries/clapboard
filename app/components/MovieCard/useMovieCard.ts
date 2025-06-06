@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 
 export const useMovieCard = () => {
   const movieRef = useRef<HTMLDivElement>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const descriptionRef = useRef<HTMLDivElement>(null);
 
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState(<Readonly<"top" | "bottom">>"top");
@@ -11,11 +11,11 @@ export const useMovieCard = () => {
 
   const calculatePosition = () => {
     const movieRect = movieRef.current?.getBoundingClientRect();
-    const dropdownHeight = dropdownRef.current?.getBoundingClientRect().height;
+    const descriptionHeight = descriptionRef.current?.getBoundingClientRect().height;
 
-    if (!movieRect || !dropdownHeight) return;
+    if (!movieRect || !descriptionHeight) return;
 
-    if (movieRect.top < movieRect.height || movieRect.top < dropdownHeight) {
+    if (movieRect.top < movieRect.height || movieRect.top < descriptionHeight) {
       setPosition("bottom");
     } else {
       setPosition("top");
@@ -64,7 +64,7 @@ export const useMovieCard = () => {
     toggleModal,
     position,
     movieRef,
-    dropdownRef,
+    descriptionRef,
     xPosition,
   };
 };

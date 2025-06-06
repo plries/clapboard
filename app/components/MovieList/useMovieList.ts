@@ -8,6 +8,7 @@ export const useMovieList = ({
 }: { genreId?: number}) => {
   const searchParams = useSearchParams();
   const category = searchParams.get("category") || "popular";
+  const searchQuery = searchParams.get("query") || "";
   const bottomRef = useRef<HTMLDivElement>(null);
   const movieListRef = useRef<HTMLDivElement>(null);
 
@@ -78,6 +79,35 @@ export const useMovieList = ({
     }
   }
 
+  const fetchSearchedMovies = async (isNewSearch = false) => {
+    if (searchQuery === null || searchQuery === "") return;
+    setIsLoading(true);
+    
+    try {
+      const res = await fetch(
+        `/api/movies?query=${searchQuery}&page=${pageRef.current}`,
+      );
+      const data = await res.json();
+    
+      if (isNewSearch) {
+        setMovies(data.results);
+        movieListRef.current?.classList.remove("hidden");
+      } else {
+        setMovies((prev) => {
+          const existingIds = new Set(prev.map((m) => m.id));
+          const newMovies = data.results.filter(
+            (m: MovieTypes) => !existingIds.has(m.id),
+          );
+          return [...prev, ...newMovies];
+        });
+      }
+      
+    setIsLoading(false);
+    } catch {
+      setError("failed to load movies");
+    }
+  }
+
   useEffect(() => {
     if (hasFetchedGenresRef.current) return;
     hasFetchedGenresRef.current = true;
@@ -125,6 +155,21 @@ export const useMovieList = ({
 
     fetchInitialFilteredMovies();
   }, [genreId]);
+
+  useEffect(() => {
+    if (searchQuery === null || searchQuery === "") return;
+        
+    const fetchInitialSearchedMovies = async () => {
+      pageRef.current = 1;
+
+      movieListRef.current?.classList.add("hidden");
+      setIsLoading(true);
+      setMovies([]);
+      await fetchSearchedMovies(true);
+    }
+
+    fetchInitialSearchedMovies();
+  }, [searchQuery]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
