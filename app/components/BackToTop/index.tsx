@@ -28,7 +28,7 @@ export const BackToTop = () => {
         iconRight
       >
         <span className="inline-block translate-x-full text-nowrap transition-transform duration-300 ease-in-out group-hover:translate-x-0">
-          {PAGE_CONST.BACK_TO_TOP}
+          {PAGE_CONST.BUTTONS.BACK_TO_TOP}
         </span>
       </Button>
     </div>

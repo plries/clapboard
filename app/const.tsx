@@ -14,29 +14,38 @@ export const PAGE_CONST = {
     </span>,
     " database",
   ],
-  BUTTONS: [
-    { label: "popular", value: "popular", icon: <SparkleIcon key="sparkle" /> },
-    {
-      label: "now playing",
-      value: "now_playing",
-      icon: <FilmReelIcon key="film" />,
-    },
-    {
-      label: "top rated",
-      value: "top_rated",
-      icon: <ShootingStarIcon key="star" />,
-    },
-    {
-      label: "upcoming",
-      value: "upcoming",
-      icon: <CalendarDotsIcon key="calendar" />,
-    },
-  ],
+  INPUTS: {
+    SEARCH: "search...",
+  },
+  BUTTONS: {
+    FILTERS: [
+      {
+        label: "popular",
+        value: "popular",
+        icon: <SparkleIcon key="sparkle" />,
+      },
+      {
+        label: "now playing",
+        value: "now_playing",
+        icon: <FilmReelIcon key="film" />,
+      },
+      {
+        label: "top rated",
+        value: "top_rated",
+        icon: <ShootingStarIcon key="star" />,
+      },
+      {
+        label: "upcoming",
+        value: "upcoming",
+        icon: <CalendarDotsIcon key="calendar" />,
+      },
+    ],
+    BACK_TO_TOP: "back to top",
+  },
   DROPDOWNS: {
     GENRES: {
       BUTTON: "genres",
       ALL_GENRES: "all genres",
     },
   },
-  BACK_TO_TOP: "back to top",
 };

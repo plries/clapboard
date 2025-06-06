@@ -21,6 +21,8 @@ export async function GET(request: NextRequest) {
     });
   }
 
+  // todo: add search
+
   let tmdbUrl = "";
 
   if (with_genres) {

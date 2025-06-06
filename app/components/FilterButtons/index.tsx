@@ -8,7 +8,7 @@ import { useDropdown } from "../Dropdown/useDropdown";
 
 export const FilterButtons = () => {
   const hook = useFilterButtons({
-    categoryOptions: PAGE_CONST.BUTTONS,
+    categoryOptions: PAGE_CONST.BUTTONS.FILTERS,
   });
   const useDropdownHook = useDropdown();
   const movieListHook = useMovieList({
@@ -16,9 +16,9 @@ export const FilterButtons = () => {
   });
 
   return (
-    <div className="grid w-full grid-cols-1 gap-4 pb-1 md:w-fit">
+    <div className="grid w-full grid-cols-1 gap-2 pb-1 md:w-fit">
       <div className="relative flex flex-col gap-1 rounded-3xl border border-neutral-50/25 p-1 md:flex-row md:rounded-full">
-        {PAGE_CONST.BUTTONS.map((button) => {
+        {PAGE_CONST.BUTTONS.FILTERS.map((button) => {
           const buttonRef = (el: HTMLButtonElement | null) => {
             hook.buttonRefs.current[button.value] = el;
           };
