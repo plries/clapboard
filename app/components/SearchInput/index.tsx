@@ -1,8 +1,9 @@
 "use client";
-import { MagnifyingGlassIcon } from "@phosphor-icons/react";
+import { MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
 import { Button } from "../Button";
 import { useSearchInput } from "./useSearchInput";
 import { PAGE_CONST } from "@/app/const";
+import { IconButton } from "../IconButton";
 
 export const SearchInput = () => {
   const hook = useSearchInput();
@@ -18,12 +19,19 @@ export const SearchInput = () => {
         onChange={hook.handleInputChange}
         autoFocus
       />
+      <IconButton
+        additionalClasses={`border-transparent bg-transparent !shadow-none duration-300 ease-in-out transition-opacity ${hook.inputValue ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        icon={<XIcon size={16} />}
+        name={PAGE_CONST.BUTTONS.CLEAR}
+        onClick={hook.handleClear}
+      />
       <Button
         additionalClasses={{
           button: "rounded-full border-slate-400 bg-slate-500 text-slate-50",
         }}
         icon={<MagnifyingGlassIcon size={16} />}
         onClick={hook.handleSubmit}
+        disabled={!hook.inputValue}
       >
         {PAGE_CONST.BUTTONS.SEARCH}
       </Button>

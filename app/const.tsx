@@ -42,6 +42,7 @@ export const PAGE_CONST = {
     ],
     BACK_TO_TOP: "back to top",
     SEARCH: "search",
+    CLEAR: "clear input",
   },
   DROPDOWNS: {
     GENRES: {

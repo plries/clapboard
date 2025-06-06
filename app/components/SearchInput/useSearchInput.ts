@@ -20,6 +20,13 @@ export const useSearchInput = () => {
     router.push(`?${params.toString()}`);
   };
 
+  const handleClear = () => {
+    const params = new URLSearchParams(searchParams);
+    setInputValue("");
+    params.delete("query");
+    router.push(`?${params.toString()}`);
+  };
+
   useEffect(() => {
     const handleEnter = (event: KeyboardEvent) => {
       if (event.key === "Enter") {
@@ -39,5 +46,6 @@ export const useSearchInput = () => {
     setInputValue,
     handleInputChange,
     handleSubmit,
+    handleClear,
   };
 };

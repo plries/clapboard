@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 
 export const useMovieList = ({
   genreId,
-}: { genreId?: number}) => {
+}: { genreId?: number }) => {
   const searchParams = useSearchParams();
   const category = searchParams.get("category") || "popular";
   const searchQuery = searchParams.get("query") || "";
@@ -61,6 +61,7 @@ export const useMovieList = ({
       const data = await res.json();
 
       if (isNewGenre) {
+        console.log("clearing input");
         setMovies(data.results);
         movieListRef.current?.classList.remove("hidden");
       } else {
@@ -139,7 +140,7 @@ export const useMovieList = ({
     }
 
     fetchInitialMovies();
-  }, [category, genreId]);
+  }, [category, genreId, searchQuery]);
 
   useEffect(() => {
     if (genreId === 0) return;
