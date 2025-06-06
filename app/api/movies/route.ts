@@ -13,6 +13,7 @@ export async function GET(request: NextRequest) {
   const category = searchParams.get("category") || "popular";
   const pageRef = searchParams.get("page") || "1";
   const with_genres = searchParams.get("with_genres");
+  const searchMovies = searchParams.get("search");
 
   const validCategories = ["popular", "top_rated", "now_playing", "upcoming"];
   if (!validCategories.includes(category)) {
@@ -21,12 +22,12 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  // todo: add search
-
   let tmdbUrl = "";
 
   if (with_genres) {
     tmdbUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&page=${pageRef}&with_genres=${with_genres}&sort_by=popularity.desc`;
+  } if (searchMovies) {
+    tmdbUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-US&query=${searchMovies}&page=${pageRef}`;
   } else {
     tmdbUrl = `https://api.themoviedb.org/3/movie/${category}?api_key=${apiKey}&language=en-US&page=${pageRef}`;
   }
