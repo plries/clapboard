@@ -46,7 +46,7 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
       <motion.div
         ref={hook.movieRef}
         initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{
           duration: 0.3,
           ease: "easeInOut",
@@ -96,6 +96,7 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
                 <HeartIcon className="text-slate-950 transition-transform duration-300 ease-in-out hover:-rotate-15" />
               }
               additionalClasses={`md:group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-20 group-focus:translate-x-0 md:group-focus-within:translate-x-0 ${hook.isOpen ? "md:translate-x-0" : "md:translate-x-full"}`}
+              onClick={() => {}}
             />
             <IconButton
               name={`add ${movie.title} to watchlist`}
@@ -103,6 +104,7 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
                 <BookmarkSimpleIcon className="text-slate-950 transition-transform duration-300 ease-in-out hover:-translate-y-0.5" />
               }
               additionalClasses={`z-10 md:group-hover:translate-x-0 transition-transform duration-300 ease-in-out group-focus:translate-x-0 md:group-focus-within:translate-x-0 ${hook.isOpen ? "md:translate-x-0" : "md:translate-x-1/2"}`}
+              onClick={() => {}}
             />
             <IconButton
               name={`view ${movie.title} details`}
@@ -116,7 +118,9 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
                 </span>
               }
               onClick={hook.toggleModal}
-              disabled={!movie.overview && !movie.poster_path && !movie.backdrop_path}
+              disabled={
+                !movie.overview && !movie.poster_path && !movie.backdrop_path
+              }
             />
           </div>
           <div

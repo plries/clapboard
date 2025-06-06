@@ -15,6 +15,7 @@ export const useDropdown = () => {
     name: "",
   });
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
+  const [isMobile, setIsMobile] = useState(false);
 
   const params = new URLSearchParams(searchParams);
     
@@ -51,11 +52,12 @@ export const useDropdown = () => {
 
   useEffect(() => {
     const updatePosition = () => {
-      if (buttonRef.current) {
+      if (buttonRef.current && dropdownRef.current) {
         const rect = buttonRef.current.getBoundingClientRect();
+        const dropdownRect = dropdownRef.current.getBoundingClientRect();
         setDropdownPosition({
           top: rect.bottom + window.scrollY,
-          left: rect.left + window.scrollX,
+          left: isMobile ? (window.innerWidth / 2 + window.scrollX) - dropdownRect.width / 2 : rect.left + window.scrollX,
         });
       }
     };    
@@ -68,6 +70,18 @@ export const useDropdown = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, [isOpen]);
+
+  
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   return {
     isOpen,

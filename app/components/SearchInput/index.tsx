@@ -20,14 +20,15 @@ export const SearchInput = () => {
         autoFocus
       />
       <IconButton
-        additionalClasses={`border-transparent bg-transparent !shadow-none duration-300 ease-in-out transition-opacity ${hook.inputValue ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        additionalClasses={`border-transparent aspect-square rounded-xl bg-transparent !shadow-none duration-300 ease-in-out transition-[opacity,background-color] hover:bg-neutral-200 ${hook.inputValue ? "opacity-100" : "opacity-0 pointer-events-none"}`}
         icon={<XIcon size={16} />}
         name={PAGE_CONST.BUTTONS.CLEAR}
         onClick={hook.handleClear}
       />
       <Button
         additionalClasses={{
-          button: "rounded-full border-slate-400 bg-slate-500 text-slate-50",
+          button:
+            "rounded-full border-slate-400 transition-colors duration-300 ease-in-out bg-slate-500 text-slate-50 hover:bg-slate-600",
         }}
         icon={<MagnifyingGlassIcon size={16} />}
         onClick={hook.handleSubmit}

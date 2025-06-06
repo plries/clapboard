@@ -16,4 +16,5 @@ export type DropdownPropTypes = {
   buttonRef?: React.RefObject<HTMLButtonElement | null>;
   dropdownRef?: React.RefObject<HTMLDivElement | null>;
   dropdownPosition?: { top: number; left: number };
+  params?: URLSearchParams;
 };

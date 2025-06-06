@@ -17,7 +17,7 @@ export const FilterButtons = () => {
 
   return (
     <div className="grid w-full grid-cols-1 place-items-center gap-2 pb-1 md:w-fit">
-      <div className="relative flex flex-col gap-1 rounded-3xl border border-neutral-50/25 p-1 md:flex-row md:rounded-full">
+      <div className="relative flex w-full flex-col gap-1 rounded-3xl border border-neutral-50/25 p-1 md:flex-row md:rounded-full">
         {PAGE_CONST.BUTTONS.FILTERS.map((button) => {
           const buttonRef = (el: HTMLButtonElement | null) => {
             hook.buttonRefs.current[button.value] = el;
@@ -58,25 +58,28 @@ export const FilterButtons = () => {
         />
       </div>
       <div className="sticky left-0 z-20 w-fit md:relative md:left-auto">
-        <Dropdown
-          options={movieListHook.genres}
-          label={PAGE_CONST.DROPDOWNS.GENRES.BUTTON}
-          toggleDropdown={useDropdownHook.toggleDropdown}
-          isOpen={useDropdownHook.isOpen}
-          updateSelectedOption={useDropdownHook.updateSelectedOption}
-          selectedOption={useDropdownHook.selectedOption}
-          type={PAGE_CONST.DROPDOWNS.GENRES.BUTTON}
-          additionalClasses={{
-            button:
-              useDropdownHook.selectedOption.id !== 0 &&
-              useDropdownHook.params.get("with_genres")
-                ? "bg-slate-50 border-slate-50 !text-slate-950"
-                : "",
-          }}
-          dropdownRef={useDropdownHook.dropdownRef}
-          buttonRef={useDropdownHook.buttonRef}
-          dropdownPosition={useDropdownHook.dropdownPosition}
-        />
+        <div className="relative">
+          <Dropdown
+            options={movieListHook.genres}
+            label={PAGE_CONST.DROPDOWNS.GENRES.BUTTON}
+            toggleDropdown={useDropdownHook.toggleDropdown}
+            isOpen={useDropdownHook.isOpen}
+            updateSelectedOption={useDropdownHook.updateSelectedOption}
+            selectedOption={useDropdownHook.selectedOption}
+            type={PAGE_CONST.DROPDOWNS.GENRES.BUTTON}
+            additionalClasses={{
+              button:
+                useDropdownHook.selectedOption.id !== 0 &&
+                useDropdownHook.params.get("with_genres")
+                  ? "bg-slate-50 border-slate-50 !text-slate-950"
+                  : "",
+            }}
+            dropdownRef={useDropdownHook.dropdownRef}
+            buttonRef={useDropdownHook.buttonRef}
+            dropdownPosition={useDropdownHook.dropdownPosition}
+            params={useDropdownHook.params}
+          />
+        </div>
       </div>
     </div>
   );
