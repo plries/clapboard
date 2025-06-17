@@ -8,11 +8,10 @@ import {
 
 export const PAGE_CONST = {
   HEADING: [
-    "the ",
-    <span key="movie" className="text-slate-400">
-      movie
+    <span key="clap" className="text-slate-400">
+      clap
     </span>,
-    " database",
+      "board",
   ],
   INPUTS: {
     SEARCH: "search for a movie...",

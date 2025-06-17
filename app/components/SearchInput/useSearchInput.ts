@@ -64,7 +64,6 @@ export const useSearchInput = () => {
       previousParams.with_genres !== newParams.with_genres)
       && previousParams.query !== null
     ) {
-      console.log("resetting input value");
       setInputValue("");
     }
 

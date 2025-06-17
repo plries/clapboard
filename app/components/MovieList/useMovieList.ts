@@ -3,9 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { MovieTypes, GenreTypes } from "@/app/types";
 import { useSearchParams } from "next/navigation";
 
-export const useMovieList = ({
-  genreId,
-}: { genreId?: number }) => {
+export const useMovieList = ({ genreId }: { genreId?: number }) => {
   const searchParams = useSearchParams();
   const category = searchParams.get("category") || "popular";
   const searchQuery = searchParams.get("query") || "";
@@ -31,10 +29,12 @@ export const useMovieList = ({
       const data = await res.json();
 
       if (isNewCategory) {
+        console.log("isNewCategory");
         genreId = 0;
         setMovies(data.results);
         movieListRef.current?.classList.remove("hidden");
       } else {
+        console.log("!isNewCategory");
         setMovies((prev) => {
           const existingIds = new Set(prev.map((m) => m.id));
           const newMovies = data.results.filter(
@@ -53,7 +53,7 @@ export const useMovieList = ({
   const fetchFilteredMovies = async (isNewGenre = false) => {
     if (genreId === 0) return;
     setIsLoading(true);
-    
+
     try {
       const res = await fetch(
         `/api/movies?with_genres=${genreId}&page=${pageRef.current}`,
@@ -61,10 +61,11 @@ export const useMovieList = ({
       const data = await res.json();
 
       if (isNewGenre) {
-        console.log("clearing input");
+        console.log("isNewGenre");
         setMovies(data.results);
         movieListRef.current?.classList.remove("hidden");
       } else {
+        console.log("!isNewGenre");
         setMovies((prev) => {
           const existingIds = new Set(prev.map((m) => m.id));
           const newMovies = data.results.filter(
@@ -78,22 +79,24 @@ export const useMovieList = ({
     } catch {
       setError("failed to load movies");
     }
-  }
+  };
 
   const fetchSearchedMovies = async (isNewSearch = false) => {
     if (searchQuery === null || searchQuery === "") return;
     setIsLoading(true);
-    
+
     try {
       const res = await fetch(
         `/api/movies?query=${searchQuery}&page=${pageRef.current}`,
       );
       const data = await res.json();
-    
+
       if (isNewSearch) {
+        console.log("isNewSearch");
         setMovies(data.results);
         movieListRef.current?.classList.remove("hidden");
       } else {
+        console.log("!isNewSearch");
         setMovies((prev) => {
           const existingIds = new Set(prev.map((m) => m.id));
           const newMovies = data.results.filter(
@@ -102,12 +105,12 @@ export const useMovieList = ({
           return [...prev, ...newMovies];
         });
       }
-      
-    setIsLoading(false);
+
+      setIsLoading(false);
     } catch {
       setError("failed to load movies");
     }
-  }
+  };
 
   useEffect(() => {
     if (hasFetchedGenresRef.current) return;
@@ -129,7 +132,7 @@ export const useMovieList = ({
   useEffect(() => {
     if (hasFetchedMoviesRef.current || genreId !== 0) return;
     hasFetchedMoviesRef.current = true;
-    
+
     const fetchInitialMovies = async () => {
       pageRef.current = 1;
 
@@ -137,14 +140,14 @@ export const useMovieList = ({
       setIsLoading(true);
       await fetchMovies(true);
       hasFetchedMoviesRef.current = false;
-    }
+    };
 
     fetchInitialMovies();
   }, [category, genreId, searchQuery]);
 
   useEffect(() => {
     if (genreId === 0) return;
-        
+
     const fetchInitialFilteredMovies = async () => {
       pageRef.current = 1;
 
@@ -152,14 +155,14 @@ export const useMovieList = ({
       setIsLoading(true);
       setMovies([]);
       await fetchFilteredMovies(true);
-    }
+    };
 
     fetchInitialFilteredMovies();
   }, [genreId]);
 
   useEffect(() => {
     if (searchQuery === null || searchQuery === "") return;
-        
+
     const fetchInitialSearchedMovies = async () => {
       pageRef.current = 1;
 
@@ -167,7 +170,7 @@ export const useMovieList = ({
       setIsLoading(true);
       setMovies([]);
       await fetchSearchedMovies(true);
-    }
+    };
 
     fetchInitialSearchedMovies();
   }, [searchQuery]);

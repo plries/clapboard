@@ -3,14 +3,13 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   IconContext,
-  BookmarkSimpleIcon,
-  HeartIcon,
+  StarIcon,
   ArticleIcon,
   XIcon,
   CameraIcon,
   CalendarDotsIcon,
-  StarIcon,
   FireIcon,
+  ArrowUpRightIcon,
 } from "@phosphor-icons/react";
 import { IconButton } from "@/app/components/";
 import { MovieCardPropTypes } from "./types";
@@ -51,7 +50,7 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
           duration: 0.3,
           ease: "easeInOut",
         }}
-        className={`font-dm-sans group relative flex h-fit h-full w-full flex-col justify-between gap-2 rounded-2xl border border-neutral-300 bg-gradient-to-b from-slate-50 to-slate-400 p-1 shadow-xl ${hook.isOpen ? "z-50" : "z-10"}`}
+        className={`font-dm-sans group relative flex h-full w-full flex-col justify-between gap-2 rounded-2xl border border-neutral-300 bg-gradient-to-b from-slate-50 to-slate-400 p-1 shadow-xl ${hook.isOpen ? "z-50" : "z-10"}`}
         key={movie.id}
       >
         <div className="z-10 grid auto-rows-min grid-cols-[2fr_1fr] gap-4 p-1">
@@ -88,23 +87,16 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
             </div>
           )}
           <div
-            className={`absolute right-2 bottom-2 z-20 flex flex-row gap-1 transition-opacity duration-300 ease-in-out md:group-focus-within:opacity-100 md:group-hover:opacity-100 ${hook.isOpen ? "md:opacity-100" : "md:opacity-0"}`}
+            className={`absolute right-2 bottom-2 z-20 flex flex-row gap-1 transition-opacity duration-300 ease-in-out`}
           >
             <IconButton
-              name={`add ${movie.title} to favourites`}
+              name={`view ${movie.title} details`}
               icon={
-                <HeartIcon className="text-slate-950 transition-transform duration-300 ease-in-out hover:-rotate-15" />
+                <span className="transition-transform duration-300 ease-in-out hover:-rotate-10 group-disabled:hover:!rotate-0">
+                  <ArrowUpRightIcon className="text-slate-950" />
+                </span>
               }
-              additionalClasses={`md:group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-20 group-focus:translate-x-0 md:group-focus-within:translate-x-0 ${hook.isOpen ? "md:translate-x-0" : "md:translate-x-full"}`}
-              onClick={() => {}}
-            />
-            <IconButton
-              name={`add ${movie.title} to watchlist`}
-              icon={
-                <BookmarkSimpleIcon className="text-slate-950 transition-transform duration-300 ease-in-out hover:-translate-y-0.5" />
-              }
-              additionalClasses={`z-10 md:group-hover:translate-x-0 transition-transform duration-300 ease-in-out group-focus:translate-x-0 md:group-focus-within:translate-x-0 ${hook.isOpen ? "md:translate-x-0" : "md:translate-x-1/2"}`}
-              onClick={() => {}}
+              href={`/movie/${movie.id}`}
             />
             <IconButton
               name={`view ${movie.title} details`}
@@ -180,7 +172,7 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
         </div>
         {movie.poster_path && (
           <div
-            className={`absolute top-0 grid hidden h-full place-items-center transition-[opacity,padding] duration-300 ease-in-out md:block ${hook.xPosition === "right" ? "right-0 translate-x-full" : "left-0 -translate-x-full"} ${hook.isOpen ? "px-4" : "pointer-events-none opacity-0"}`}
+            className={`absolute top-0 grid h-full place-items-center transition-[opacity,padding] duration-300 ease-in-out md:block ${hook.xPosition === "right" ? "right-0 translate-x-full" : "left-0 -translate-x-full"} ${hook.isOpen ? "px-4" : "pointer-events-none opacity-0"}`}
           >
             <Image
               loading="lazy"

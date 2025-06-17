@@ -37,12 +37,14 @@ export const Dropdown = ({
         }
         iconRight
         additionalClasses={{
-          button: `text-neutral-50/75 border-neutral-50/25 rounded-full lowercase ${additionalClasses?.button ?? ""}`,
+          button: `text-neutral-50/75 border-neutral-50/25 hover:bg-slate-300/30 rounded-full lowercase ${additionalClasses?.button ?? ""}`,
         }}
         onClick={() => toggleDropdown(true)}
         buttonRef={buttonRef}
       >
-        {selectedOption.name ? selectedOption.name : label}
+        {selectedOption.id !== 0 && params?.get("with_genres")
+          ? selectedOption.name
+          : label}
       </Button>
       {isOpen &&
         dropdownPosition &&
