@@ -9,14 +9,18 @@ import {
   CameraIcon,
   CalendarDotsIcon,
   FireIcon,
-  ArrowUpRightIcon,
 } from "@phosphor-icons/react";
 import { IconButton } from "@/app/components/";
 import { MovieCardPropTypes } from "./types";
 import { useMovieCard } from "./useMovieCard";
 
-export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
+export const MovieCard = ({
+  movie,
+  genres,
+  searchParams,
+}: MovieCardPropTypes) => {
   const hook = useMovieCard();
+  const params = new URLSearchParams(searchParams);
 
   const matchingMovieGenres = genres.map((genre) => {
     const match = movie.genre_ids.includes(genre.id);
@@ -92,15 +96,6 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
             <IconButton
               name={`view ${movie.title} details`}
               icon={
-                <span className="transition-transform duration-300 ease-in-out hover:-rotate-10 group-disabled:hover:!rotate-0">
-                  <ArrowUpRightIcon className="text-slate-950" />
-                </span>
-              }
-              href={`/movie/${movie.id}`}
-            />
-            <IconButton
-              name={`view ${movie.title} details`}
-              icon={
                 <span className="transition-transform duration-300 ease-in-out hover:rotate-10 group-disabled:hover:!rotate-0">
                   {hook.isOpen ? (
                     <XIcon className="text-slate-950" />
@@ -109,7 +104,10 @@ export const MovieCard = ({ movie, genres }: MovieCardPropTypes) => {
                   )}
                 </span>
               }
-              onClick={hook.toggleModal}
+              onClick={() => {
+                hook.toggleModal();
+                params.set("movie_id", movie.id.toString());
+              }}
               disabled={
                 !movie.overview && !movie.poster_path && !movie.backdrop_path
               }

@@ -11,4 +11,5 @@ export type ButtonPropTypes = {
   buttonRef?: React.RefObject<HTMLButtonElement | null> | ((el: HTMLButtonElement | null) => void) 
   onMouseOver?: () => void
   onMouseOut?: () => void
+  href?: string
 };

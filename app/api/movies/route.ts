@@ -14,21 +14,27 @@ export async function GET(request: NextRequest) {
   const pageRef = searchParams.get("page") || "1";
   const with_genres = searchParams.get("with_genres");
   const searchMovies = searchParams.get("query");
-
-  const validCategories = ["popular", "top_rated", "now_playing", "upcoming"];
-  if (!validCategories.includes(category)) {
-    return new Response(JSON.stringify({ error: "invalid category" }), {
-      status: 400,
-    });
-  }
+  const movieId = searchParams.get("movie_id");
 
   let tmdbUrl = "";
 
-  if (with_genres) {
-    tmdbUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&page=${pageRef}&with_genres=${with_genres}&sort_by=popularity.desc`;
-  } if (searchMovies) {
+  if (movieId) {
+    tmdbUrl = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=en-US&append_to_response=credits`;
+  }
+  else if (searchMovies) {
     tmdbUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-US&query=${searchMovies}&page=${pageRef}`;
-  } else {
+  }
+  else if (with_genres) {
+    tmdbUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&page=${pageRef}&with_genres=${with_genres}&sort_by=popularity.desc`;
+  }
+  else {
+    const validCategories = ["popular", "top_rated", "now_playing", "upcoming"];
+    if (!validCategories.includes(category)) {
+      return new Response(JSON.stringify({ error: "invalid category" }), {
+        status: 400,
+      });
+    }
+
     tmdbUrl = `https://api.themoviedb.org/3/movie/${category}?api_key=${apiKey}&language=en-US&page=${pageRef}`;
   }
 

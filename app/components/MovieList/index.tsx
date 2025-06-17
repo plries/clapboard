@@ -23,6 +23,7 @@ export const MovieList = () => {
             key={movie.id}
             movie={movie}
             genres={hook.genres}
+            searchParams={searchParams}
             {...movie}
           />
         ))}

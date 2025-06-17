@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ButtonPropTypes } from "./types";
 
 export const Button = ({
@@ -10,8 +11,23 @@ export const Button = ({
   buttonRef,
   onMouseOver,
   onMouseOut,
+  href,
 }: ButtonPropTypes) => {
-  return (
+  return href ? (
+    <Link
+      className={`group flex h-fit w-fit cursor-pointer flex-row items-center justify-center gap-2 border px-4 py-2 leading-none shadow-md transition-all duration-300 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 ${additionalClasses?.button ?? ""}`}
+      onClick={onClick}
+      onMouseOver={onMouseOver}
+      onMouseLeave={onMouseOut}
+      href={href}
+    >
+      {!iconRight && icon}
+      <span className={`mb-1 ${additionalClasses?.text ?? ""}`}>
+        {children}
+      </span>
+      {iconRight && icon}
+    </Link>
+  ) : (
     <button
       className={`group flex h-fit w-fit cursor-pointer flex-row items-center justify-center gap-2 border px-4 py-2 leading-none shadow-md transition-all duration-300 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 ${additionalClasses?.button ?? ""}`}
       onClick={onClick}

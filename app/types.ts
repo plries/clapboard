@@ -9,6 +9,25 @@ export type MovieTypes = {
   vote_average: number;
   vote_count: number;
   popularity: number;
+
+  origin_country?: string;
+  production_companies?: { id: number; name: string; logo_path: string }[];
+  budget?: number;
+  credits?: {
+    cast: {
+      id: number;
+      name: string;
+      character: string;
+      profile_path: string;
+    }[];
+    crew: {
+      id: number;
+      department: string;
+      name: string;
+      job: string;
+      profile_path: string;
+    }[];
+  };
 };
 
 export type GenreTypes = {

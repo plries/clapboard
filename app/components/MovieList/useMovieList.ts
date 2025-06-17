@@ -7,6 +7,7 @@ export const useMovieList = ({ genreId }: { genreId?: number }) => {
   const searchParams = useSearchParams();
   const category = searchParams.get("category") || "popular";
   const searchQuery = searchParams.get("query") || "";
+  const movieId = searchParams.get("movie_id");
   const bottomRef = useRef<HTMLDivElement>(null);
   const movieListRef = useRef<HTMLDivElement>(null);
 
@@ -14,6 +15,7 @@ export const useMovieList = ({ genreId }: { genreId?: number }) => {
   const [error, setError] = useState<string | null>(null);
   const [genres, setGenres] = useState<GenreTypes[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [movieDetails, setMovieDetails] = useState<MovieTypes>();
 
   const hasFetchedGenresRef = useRef(false);
   const hasFetchedMoviesRef = useRef(false);
@@ -111,6 +113,25 @@ export const useMovieList = ({ genreId }: { genreId?: number }) => {
       setError("failed to load movies");
     }
   };
+
+  const fetchMovieDetails = async () => {
+    if (!movieId) return;
+
+    try {
+      console.log("getting movie details");
+      const res = await fetch(`/api/movies?movie_id=${movieId}`);
+      const data = await res.json();
+      setMovieDetails(data);
+    } catch {
+      setError("Failed to load movie details");
+    }
+  };
+
+  // TODO: update when movieId changes
+  useEffect(() => {
+    fetchMovieDetails();
+    console.log("movieId changed", movieId);
+  }, [movieId]);
 
   useEffect(() => {
     if (hasFetchedGenresRef.current) return;
@@ -215,5 +236,6 @@ export const useMovieList = ({ genreId }: { genreId?: number }) => {
     bottomRef,
     movieListRef,
     fetchMovies,
+    movieDetails,
   };
 };
